@@ -1,6 +1,6 @@
 package:
   name: r-bigstatsr
-  version: 1.5.12
+  version: "1.5.12"
 source:
   url: "{{ cran_mirror }}/src/contrib/bigstatsr_1.5.12.tar.gz"
   sha256: a8a77e0717d8c59e4762db7d0adda10284b8f3c100f9df445854fa90643241f2

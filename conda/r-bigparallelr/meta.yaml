@@ -1,0 +1,39 @@
+package:
+  name: r-bigparallelr
+  version: "0.3.2"
+source:
+  url: "{{ cran_mirror }}/src/contrib/bigparallelr_0.3.2.tar.gz"
+  sha256: 5a3312699fdf6521e982b6fce844977dd7e9c3188354a7c3106c24495e643393
+build:
+  number: 0
+  rpaths:
+    - lib/R/lib/
+    - lib/
+requirements:
+  host:
+    - r-base
+    - r-rhpcblasctl
+    - r-bigassertr
+    - r-doparallel
+    - r-flock
+    - r-foreach
+    - r-parallelly
+  run:
+    - r-base
+    - r-rhpcblasctl
+    - r-bigassertr
+    - r-doparallel
+    - r-flock
+    - r-foreach
+    - r-parallelly
+test:
+  commands:
+    - $R -e "library('bigparallelr')"
+about:
+  home: https://github.com/privefl/bigparallelr
+  license: GPL-3
+  summary: Utility functions for easy parallelism in R. Include some reexports from other packages,
+    utility functions for splitting and parallelizing over blocks, and choosing and
+    setting the number of cores used.
+  license_family: GPL3
+  license_file: '{{ environ["PREFIX"] }}/lib/R/share/licenses/GPL-3'
