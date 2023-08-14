@@ -1,0 +1,37 @@
+package:
+  name: r-progress
+  version: "1.2.2"
+source:
+  url: "{{ cran_mirror }}/src/contrib/progress_1.2.2.tar.gz"
+  sha256: b4a4d8ed55db99394b036a29a0fb20b5dd2a91c211a1d651c52a1023cc58ff35
+build:
+  number: 1
+  rpaths:
+    - lib/R/lib/
+    - lib/
+requirements:
+  host:
+    - r-base
+    - r-r6
+    - r-crayon
+    - r-hms
+    - r-prettyunits
+  run:
+    - r-base
+    - r-r6
+    - r-crayon
+    - r-hms
+    - r-prettyunits
+
+test:
+  commands:
+    - $R -e "library('progress')"
+about:
+  home: https://github.com/r-lib/progress#readme
+  license: MIT
+  summary: Configurable Progress bars, they may include percentage, elapsed time, and/or the
+    estimated completion time. They work in terminals, in 'Emacs' 'ESS', 'RStudio',
+    'Windows' 'Rgui' and the 'macOS' 'R.app'. The package also provides a 'C++' 'API',
+    that works with or without 'Rcpp'.
+  license_family: MIT
+  license_file: '{{ environ["PREFIX"] }}/lib/R/share/licenses/MIT'

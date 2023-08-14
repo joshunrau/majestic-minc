@@ -1,0 +1,32 @@
+package:
+  name: r-fs
+  version: "1.6.3"
+source:
+  url: "{{ cran_mirror }}/src/contrib/fs_1.6.3.tar.gz"
+  sha256: fa82061e50d7a4d94b7e404f9f2b699e75ae8fbfb575fabdfc2c39f536c0f971
+build:
+  number: 1
+  rpaths:
+    - lib/R/lib/
+    - lib/
+requirements:
+  build:
+    - "{{ compiler('c') }}"
+    - "{{ compiler('cxx') }}"
+    - autoconf
+    - automake
+    - pkg-config
+    - make
+  host:
+    - r-base
+  run:
+    - r-base
+test:
+  commands:
+    - $R -e "library('fs')"
+about:
+  home: https://fs.r-lib.org, https://github.com/r-lib/fs
+  license: MIT
+  summary: A cross-platform interface to file system operations, built on top of the 'libuv' C library.
+  license_family: MIT
+  license_file: '{{ environ["PREFIX"] }}/lib/R/share/licenses/MIT'

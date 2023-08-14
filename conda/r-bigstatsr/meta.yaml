@@ -1,0 +1,54 @@
+package:
+  name: r-bigstatsr
+  version: 1.5.12
+source:
+  url: "{{ cran_mirror }}/src/contrib/bigstatsr_1.5.12.tar.gz"
+  sha256: a8a77e0717d8c59e4762db7d0adda10284b8f3c100f9df445854fa90643241f2
+build:
+  number: 1
+  rpaths:
+    - lib/R/lib/
+    - lib/
+requirements:
+  build:
+    - "{{ compiler('c') }}"
+    - "{{ compiler('cxx') }}"
+    - make
+  host:
+    - r-base
+    - r-rspectra
+    - r-rcpp
+    - r-rcpparmadillo
+    - r-bigassertr
+    - r-bigparallelr
+    - r-cowplot
+    - r-foreach
+    - r-ggplot2
+    - r-ps
+    - r-rmio
+    - r-tibble
+  run:
+    - r-base
+    - r-rspectra
+    - r-rcpp
+    - r-rcpparmadillo
+    - r-bigassertr
+    - r-bigparallelr
+    - r-cowplot
+    - r-foreach
+    - r-ggplot2
+    - r-ps
+    - r-rmio
+    - r-tibble
+test:
+  commands:
+    - $R -e "library('bigstatsr')"
+about:
+  home: https://privefl.github.io/bigstatsr/
+  license: GPL-3
+  summary: Easy-to-use, efficient, flexible and scalable statistical tools. Package bigstatsr
+    provides and uses Filebacked Big Matrices via memory-mapping. It provides for instance
+    matrix operations, Principal Component Analysis, sparse linear supervised models,
+    utility functions and more <doi:10.1093/bioinformatics/bty185>.
+  license_family: GPL3
+  license_file: '{{ environ["PREFIX"] }}/lib/R/share/licenses/GPL-3'

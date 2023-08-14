@@ -1,0 +1,35 @@
+package:
+  name: r-digest
+  version: 0.6.33
+source:
+  url: "{{ cran_mirror }}/src/contrib/digest_0.6.33.tar.gz"
+  sha256: be702c886b1639be7eda4ea25a4261b30ce418c580f79bd78ec8d6cb4d327819
+build:
+  number: 1
+  rpaths:
+    - lib/R/lib/
+    - lib/
+requirements:
+  build:
+    - "{{ compiler('c') }}"
+    - "{{ compiler('cxx') }}"
+    - make
+  host:
+    - r-base
+  run:
+    - r-base
+test:
+  commands:
+    - $R -e "library('digest')"
+about:
+  home: https://github.com/eddelbuettel/digest, https://dirk.eddelbuettel.com/code/digest.html
+  license: GPL-2
+  summary: Implementation of a function 'digest()' for the creation of hash digests of arbitrary
+    R objects (using the 'md5', 'sha-1', 'sha-256', 'crc32', 'xxhash', 'murmurhash',
+    'spookyhash', 'blake3' and 'crc32c' algorithms) permitting easy comparison of R
+    language objects, as well as functions such as'hmac()' to create hash-based message
+    authentication code. Please note that this package is not meant to be deployed for
+    cryptographic purposes for which more comprehensive (and widely tested) libraries
+    such as 'OpenSSL' should be used.
+  license_family: GPL2
+  license_file: '{{ environ["PREFIX"] }}/lib/R/share/licenses/GPL-2'

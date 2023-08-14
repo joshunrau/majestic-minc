@@ -1,0 +1,74 @@
+package:
+  name: "r-rminc"
+  version: "1.5.3.0"
+source:
+  url: https://github.com/vfonov/RMINC/archive/refs/tags/v1.5.3.0.tidy.bg.tar.gz
+  sha256: 9637f23d36aa851ba3b80928d0532274d7ad7ae09efe1247e08b709a77b18996
+build:
+  number: 1
+  rpaths:
+    - lib/R/lib/
+    - lib/
+requirements:
+  host:
+    - "{{ compiler('c') }}"
+    - "{{ compiler('cxx') }}"
+    - "{{ compiler('fortran') }}"
+    - r-base
+    - r-dplyr
+    - r-batchtools
+    - r-tidyr
+    - r-readr
+    - r-lme4
+    - r-purrr
+    - r-shiny
+    - r-gridbase
+    - r-rcpp
+    - r-matrix
+    - r-tibble
+    - r-yaml
+    - r-data.tree
+    - r-visnetwork
+    - r-rjson
+    - r-dt
+    - r-rlang
+    - r-bigstatsr
+    - r-plotrix
+    - minc-toolkit-v2==1.9.19=noblas_full_h1234567_2
+    - zlib
+  build:
+    - "{{ compiler('c') }}"
+    - "{{ compiler('cxx') }}"
+    - "{{ compiler('fortran') }}"
+    - make
+    - minc-toolkit-v2==1.9.19=noblas_full_h1234567_2
+    - r-base
+    - zlib
+  run:
+    - minc-toolkit-v2==1.9.19=noblas_full_h1234567_2
+    - zlib
+    - r-base
+    - r-dplyr
+    - r-batchtools
+    - r-tidyr
+    - r-readr
+    - r-lme4
+    - r-purrr
+    - r-shiny
+    - r-gridbase
+    - r-rcpp
+    - r-matrix
+    - r-tibble
+    - r-yaml
+    - r-data.tree
+    - r-visnetwork
+    - r-rjson
+    - r-dt
+    - r-rlang
+    - r-bigstatsr
+    - r-plotrix
+    - r-alertest
+about:
+  home: https://github.com/Mouse-Imaging-Centre/RMINC
+  summary: 'MINC Interface to R'
+  dev_url: https://github.com/Mouse-Imaging-Centre/RMINC

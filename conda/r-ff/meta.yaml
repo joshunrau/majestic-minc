@@ -1,0 +1,36 @@
+package:
+  name: r-ff
+  version: 4.0.9
+source:
+  url: "{{ cran_mirror }}/src/contrib/ff_4.0.9.tar.gz"
+  sha256: 722053271987a0c9673c3ff9e7968bbab47979d529a2fe6bb1a3179408ee3c4f
+build:
+  number: 1
+  rpaths:
+    - lib/R/lib/
+    - lib/
+requirements:
+  build:
+    - "{{ compiler('c') }}" 
+    - "{{ compiler('cxx') }}"
+    - autoconf
+    - automake
+    - pkg-config
+    - make
+  host:
+    - r-base
+    - r-bit
+  run:
+    - r-base
+    - r-bit
+test:
+  commands:
+    - $R -e "library('ff')"
+about:
+  home: https://github.com/truecluster/ff
+  license: GPL-2 | GPL-3
+  summary: 'The ff package provides data structures that are stored on disk but behave (almost)
+    as if they were in RAM by transparently mapping only a section (pagesize) in main
+    memory.'
+  license_family: GPL3
+  license_file: LICENSE

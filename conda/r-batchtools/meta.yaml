@@ -1,0 +1,62 @@
+package:
+  name: r-batchtools
+  version: "0.9.17"
+source:
+  url: "{{ cran_mirror }}/src/contrib/batchtools_0.9.17.tar.gz"
+  sha256: "b6e1dd54e8b70c2bf38d2ad1884f6b60fc74c1100f910f46724aa723c0749be6"
+build:
+  number: 1
+  rpaths:
+    - lib/R/lib/
+    - lib/
+requirements:
+  build:
+    - "{{ compiler('c') }}"
+    - make
+  host:
+    - r-base
+    - r-r6
+    - r-backports
+    - r-base64url
+    - r-brew
+    - r-checkmate
+    - r-data.table
+    - r-digest
+    - r-fs
+    - r-progress
+    - r-rappdirs
+    - r-stringi
+    - r-withr
+  run:
+    - r-base
+    - r-r6
+    - r-backports
+    - r-base64url
+    - r-brew
+    - r-checkmate
+    - r-data.table
+    - r-digest
+    - r-fs
+    - r-progress
+    - r-rappdirs
+    - r-stringi
+    - r-withr
+test:
+  commands:
+    - $R -e "library('batchtools')"
+about:
+  home: https://github.com/mllg/batchtools
+  license: LGPL-3
+  summary: As a successor of the packages 'BatchJobs' and 'BatchExperiments', this package provides
+    a parallel implementation of the Map function for high performance computing systems
+    managed by schedulers 'IBM Spectrum LSF' (<https://www.ibm.com/products/hpc-workload-management>),
+    'OpenLava' (<https://www.openlava.org/>), 'Univa Grid Engine'/'Oracle Grid Engine'
+    (<https://www.univa.com/>), 'Slurm' (<https://slurm.schedmd.com/>), 'TORQUE/PBS'
+    (<https://adaptivecomputing.com/cherry-services/torque-resource-manager/>), or 'Docker
+    Swarm' (<https://docs.docker.com/engine/swarm/>). A multicore and socket mode allow
+    the parallelization on a local machines, and multiple machines can be hooked up
+    via SSH to create a makeshift cluster. Moreover, the package provides an abstraction
+    mechanism to define large-scale computer experiments in a well-organized and reproducible
+    way.
+  license_family: LGPL
+  license_file: '{{ environ["PREFIX"] }}/lib/R/share/licenses/LGPL-3'
