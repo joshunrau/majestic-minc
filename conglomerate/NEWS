@@ -1,0 +1,106 @@
+        New in Release 1.6.8
+        --------------------
+* modifications to print_world_values.c
+* fixed compute_icbm_vols: account for volume of voxel (0.5mm or 1.0mm) and accept multiple surfaces for the brain mask
+* extended sphere_resample_obj to resample a surface based on a surface map of different size (for hi-res surfaces)
+
+        New in Release 1.6.7
+        --------------------
+* extended sphere_resample_obj to resample a surface based on a
+  surface map of different size (for hi-res surfaces)
+* fixed compute_icbm_vols: account for volume of voxel (0.5mm or 1.0mm)
+  and accept multiple surfaces for the brain mask
+* fixed bug in sphere_resample_obj for parsing of lines with leading spaces
+* added rgb to volume_object_evaluate for DTI maps
+* extended mincdefrag for large volumes
+
+        New in Release 1.6.6
+        --------------------
+* removed -mask_binvalue from mincmask.c and fixed the old way of
+  thresholding for the mask
+* removed stx_segment and moved it to registration package
+* added sphere_resample_obj.in for resampling an object
+
+        New in Release 1.6.5
+        --------------------
+* move all obj tools to bicpl/tools where they should belong
+
+        New in Release 1.6.4
+        --------------------
+* Add icbm_make_templates.pl
+* fixed convex_hull.c
+* fixed surface_mask.c and surface_mask2.c to save output with same dimensions
+  order as original image (was always z, y, x before)
+* fixed stx_segment to apply mask correctly (use sensible threshold instead
+  of zero which is prone to rounding errors)
+
+        New in Release 1.6.3
+        --------------------
+* Modification of multispectral_stx_registration for new pipeline
+* Use model icbm_avg_152_t1_tal_nlin_symmetric_VI in nlfit_smr
+* Creation of convert_object.c.
+
+        New in Release 1.6.2
+        --------------------
+* Clean-up MNI::DataDir in perl scripts.
+
+        New in Release 1.6.1
+        --------------------
+* Fix the same small bug in mincdefrag and mincskel for image bounds checking.
+
+        New in Release 1.6
+        ------------------
+* Added mincdefrag and mincskel.
+
+        New in Release 1.5
+        ------------------
+* Added various homeless, orphan, perl scripts: stx_segment,
+  smooth_mask, mritotal_suppress, compute_icbm_vols, nlfit_smr,
+  multispectral_stx_registration
+* Added mincmask
+* Still more build tweaks
+
+        New in Release 1.4
+	------------------
+
+* Added epm-header
+* compatibility changes for OSX (sqrtf())
+* Added normalize_pet to the package
+* Added find_peaks
+* Added match_tags
+* Build fixes
+
+	New in Release 1.3
+	------------------
+
+* New option for surface_mask2: -output_binary_mask.
+* ascii_binary removed to package "bicpl".
+* average_objects now works.
+
+
+	New in Release 1.2
+	------------------
+
+* Bug fix: surface_mask2 exits with correct status.
+
+
+	New in Release 1.1
+	------------------
+
+* Build fixes.
+
+
+	New in Release 1.0
+	------------------
+
+* A configure script to ease building the tools.
+
+* surface_mask2 changed to force inclusion of object boundaries
+  FIXME: need user-level description; is it a bug fix or feature change?
+
+* Bug fixes:
+  - tagtominc now correctly interprets the structure_id parameter
+  - make_gradient_volume outputs magnitude rather than squared magnitude
+    of the gradient vectors
+
+

@@ -1,0 +1,52 @@
+New in Release 1.1.1
+* Add -nocache to ANN classification
+* Fix memory problem in ann/ann.cc for missing classes
+* Fix string length (from strlen) to add 1 for '\0'
+* Clean up memory after usage in classify.cc
+
+New in Release 1.1.0
+* added voldiff
+* minor build/config changes
+
+New in Release 1.0.09
+* Copy BIC/MINC license already in sources in COPYING file
+
+New in Release 1.0.08
+* Add option to mask out background from intensity image for
+  a much better classification when background is very noisy
+
+New in Release 1.0.07
+* Disable volume caching for classify (caching fails in minc2)
+
+New in Release 1.0.06
+* Add a directory for tag points in classify_clean
+
+New in Release 1.0.05
+* Apply non-linear transformation to tag points
+
+New in Release 1.0.04
+
+* Initialize fuzzy volume to zero (was sometimes creating a
+  blank line in the output when using a mask)
+
+New in Release 1.0.03
+
+* clean-up perl scripts (.pl to .in, DataDir, xPERLx)
+
+New in Release 1.0.02
+
+* Add -user_mask_value 0.50 in classify_clean for safe brain mask thresholding
+
+New in Release 1.0.01
+
+* Fix compilation on newer versions of GCC.
+
+New in Release 1.0
+
+* fixed bug in classify_clean related to option handling
+* added the cleantags program
+
+New in Release 0.99
+
+* autoconfiscated
+* compiles with gcc 3

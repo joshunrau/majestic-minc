@@ -1,0 +1,4 @@
+elastix 5.0.0 compiles with ITK 5.0.1 compiled with the default options.
+
+
+Optionally use ITK_USE_64BITS_IDS and ITK_LEGACY_REMOVE.

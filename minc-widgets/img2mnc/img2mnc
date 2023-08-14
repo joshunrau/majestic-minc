@@ -1,0 +1,314 @@
+#! /usr/bin/env perl
+#
+# Andrew Janke - a.janke@gmail.com
+# The University of Queensland
+#
+# Copyright Andrew Janke, The University of Queensland.
+# Permission to use, copy, modify, and distribute this software and its
+# documentation for any purpose and without fee is hereby granted,
+# provided that the above copyright notice appear in all copies.  The
+# author and the University make no representations about the
+# suitability of this software for any purpose.  It is provided "as is"
+# without express or implied warranty.
+
+
+use strict;
+use warnings "all";
+use Getopt::Long;
+use Pod::Usage;
+use File::Basename;
+use File::Temp qw/ tempdir /;
+
+# until I get organised and do this properly
+my $PACKAGE = &basename($0);
+my $VERSION = '1.1.0';
+my $PACKAGE_BUGREPORT = '"Andrew Janke" <a.janke@gmail.com>';
+
+my $MM_PER_INCH = "25.399999999972568";
+
+my($me, $history, %opt, $infile, @infiles, $outfile, @args, $tmpdir);
+
+$me = &basename($0);
+%opt = (
+   'verbose' => 0,
+   'clobber' => 0,
+   'fake' => 0,
+   'tmpdir' => undef,
+   'filelist' => undef,
+   'slice_step' => undef,
+   'slice_start' => undef,
+   'depth' => 16,
+   'rgb' => 0,
+   );
+
+# get history string
+chomp($history = `date`);
+$history .= '>>>> ' . join(' ', $me, @ARGV);
+
+# Check arguments
+GetOptions(
+   'help|?' => \$opt{'help'},
+   'man' => \$opt{'man'},
+   'v|verbose' => \$opt{'verbose'},
+   'version' => sub { &print_version_info },
+   'c|clobber' => \$opt{'clobber'},
+   'f|fake' => \$opt{'fake'},
+   
+   't|tmpdir=s' => \$opt{'tmpdir'},
+   'keeptmp' => \$opt{'keeptmp'},
+   
+   'filelist=s' => \$opt{'filelist'},
+   'slice_step=f' => \$opt{'slice_step'},
+   'slice_start=f' => \$opt{'slice_start'},
+   
+   'rgb' => \$opt{'rgb'},
+   'depth=f' => \$opt{'depth'},
+   ) or pod2usage(-verbose => 1) && exit;
+
+# handle -man, -help or missing args
+pod2usage('-verbose' => 1) if $opt{'help'};
+pod2usage('-exitstatus' => 0, '-verbose' => 2) if $opt{'man'};
+pod2usage('-verbose' => 0) && exit if ($#ARGV < 0);
+
+# get input arguments
+$outfile = pop(@ARGV);
+
+# setup infiles
+if(defined $opt{'filelist'}){
+   @infiles = split(/\n/, `cat $opt{'filelist'}`);
+   }
+else{
+   @infiles = @ARGV;
+   }
+
+# check for files
+foreach $infile (@infiles){
+   die "$me: Couldn't find input file: $infile\n\n" if (!-e $infile);
+   }
+if(-e $outfile && !$opt{'clobber'}){
+   die "$me: $outfile exists, -clobber to overwrite\n";
+   }
+
+# make tmpdir
+if(defined($opt{'tmpdir'})){
+   # just in case
+   &do_cmd('mkdir', '-p', $opt{'tmpdir'});
+   $opt{'tmpdir'} = &tempdir( "$me-XXXXXXXX", DIR => $opt{'tmpdir'}, CLEANUP => (($opt{'keeptmp'}) ? 0 : 1) );
+   }
+else{
+   $opt{'tmpdir'} = &tempdir( "$me-XXXXXXXX", TMPDIR => 1, CLEANUP => (($opt{'keeptmp'}) ? 0 : 1) );
+   }
+
+# convert the input files to RAW
+my(@catfiles) = ();
+my($i, 
+   $xnelem, $ynelem, $znelem, 
+   $xstart, $ystart, $zstart, 
+   $xstep, $ystep, $zstep,
+   $buf);
+
+# set conversion type
+my $code = ($opt{'rgb'}) ? "RGB" : "GRAY";
+my @convert_args = ($opt{'rgb'}) ? () : ("-type", "Grayscale");
+
+# get size of the first file
+chomp($buf = `identify -format "%w %h" $infiles[0]`);
+($xnelem, $ynelem) = split(/\ /, $buf, 2);
+
+
+
+for($i=0; $i<=$#infiles; $i++){
+   my($xnelem_i, $ynelem_i);
+   
+   # check if all files have the same size
+   chomp($buf = `identify -format "%w %h" $infiles[$i]`);
+   ($xnelem_i, $ynelem_i) = split(/\ /, $buf, 2);
+   
+   die "\n$me: $infiles[$i] has a different xsize to $infiles[0] - ($xnelem != $xnelem_i)\n\n"
+      if ($xnelem != $xnelem_i);
+   die "\n$me: $infiles[$i] has a different ysize to $infiles[0] - ($ynelem != $xnelem_i)\n\n"
+      if ($ynelem != $ynelem_i);
+   
+   my $base = &basename($infiles[$i], ('.png', '.jpg', '.tiff'));
+   my $rawfile = sprintf("$opt{'tmpdir'}/%05d-$base.raw", $i);
+   print "$me: Working on $infiles[$i] - $rawfile\n";
+   
+   #&do_cmd('convert', '-flip', 
+   #   '-depth', $opt{'depth'},
+   #   @convert_args, 
+   #   $infiles[$i], "$code:$rawfile");
+   
+   @args = ('convert', '-flip', 
+      '-depth', $opt{'depth'},
+      @convert_args, 
+      $infiles[$i], "$code:-");
+   
+   # should do this with a perl open or open2 in case of input file names with spaces...
+   # it will happen
+   &do_cmd(join(' ', @args) . " >> $opt{'tmpdir'}/all.raw");
+   
+#   push(@catfiles, $rawfile)
+   }
+
+# create rawfile
+#open(OFH, ">$opt{'tmpdir'}/all.raw");
+#binmode(OFH);
+#for($i=0; $i<=$#catfiles; $i++){
+#   my $buf = "";
+#   open(IFH, "<", $catfiles[$i]);
+#   binmode(IFH);
+#   
+#   while( read(IFH, $buf, 65536) != 0){
+#      print OFH $buf;
+#      }
+#   
+#   close(IFH);
+#   }
+#
+#close(OFH);
+
+# slice parameters
+$znelem = $#infiles + 1;
+$zstep = $opt{'slice_step'} // 1;
+$zstart = $opt{'slice_start'} // (-1 * ($znelem * $zstep) / 2);
+
+# get step size (scale DPI to mm)
+chomp($buf = `identify -format "%x %y" $infiles[0]`);
+($xstep, undef, $ystep, undef) = split(/\ /, $buf, 4);
+$xstep = $xstep / $MM_PER_INCH;
+$ystep = $ystep / $MM_PER_INCH;
+
+# calculate starts
+$xstart = -1 * ($xnelem * $xstep) / 2;
+$ystart = -1 * ($ynelem * $ystep) / 2;
+
+# create the MINC file
+&do_cmd('rawtominc', '-2', '-clobber',
+   '-zyx', 
+   '-nomodality',
+   (($opt{'depth'} == 8) ? ('-byte') : ('-short', '-unsigned')),
+   (($opt{'rgb'}) ? ('-vector', 3) : ()),
+   '-xstep', $xstep, '-ystep', $ystep, '-zstep', $zstep,
+   '-xstart', $xstart, '-ystart', $ystart, '-zstart', $zstart,
+   '-input', "$opt{'tmpdir'}/all.raw",
+   $outfile, $znelem, $ynelem, $xnelem);
+
+
+# add the history string to the output file
+&do_cmd('minc_modify_header',
+   '-sappend', ":history='$history'",
+   $outfile);
+
+
+
+sub do_cmd { 
+   print STDOUT "@_\n" if $opt{'verbose'};
+   if(!$opt{'fake'}){
+      system(@_) == 0 or die;
+      }
+   }
+
+sub print_version_info {
+   print STDOUT "\n$PACKAGE version $VERSION\n".
+                "Comments to $PACKAGE_BUGREPORT\n\n";
+   exit;
+   }
+
+
+__END__
+
+=head1 NAME
+
+B<img2mnc> - convert an image (PNG, JPG, etc) to MINC
+
+=head1 SYNOPSIS
+
+B<img2mnc> [options] <infile1.{png|jpg|tif|gif}> [<infile2.png>] <outfile.mnc>
+
+B<img2mnc> takes an input image (any format readable by imagemagick)
+and converts it to MINC
+
+=head1 DESCRIPTION
+
+B<img2mnc> arose out of the need from converting multiple histology formats to
+MINC. This is fine for the major formats but you often have to deal with data in 
+common tif, jpg or PNG form.
+
+B<img2mnc> will attempt to deduce the step sizes from the input files based upon
+their resolution but this is not always correct. If this turns out to be incorrect
+you will need to correct this later using mincedit or minc_modify_header.
+
+Typical usage example for a single input file:
+
+    $ img2mnc in.png out.mnc
+
+Typical usage for an input set of RGB files with a bitdepth of 16 (unsigned short)
+
+    $ img2mnc -rgb input???.png out.mnc
+   
+
+=head1 OPTIONS
+
+=over 4
+
+=item B<-v>, B<--verbose>
+
+Be noisy when doing things (most importantly this will echo the resulting script to the terminal)
+
+=item B<--version>
+
+Print version number and exit
+
+=item B<-c>, B<--clobber>
+
+Overwrite existing files
+
+=item B<-h>, B<--help>
+
+Dump some quick help output
+
+=item B<--man>
+
+Dump a man page
+
+=item B<-f>, B<--fake>
+
+Do a dry run, just echo commands that would be run when combined with -verbose
+
+=item B<-t>, B<--tmpdir>
+         
+Define a tmpdir in which to place temporary files while processing
+
+=item B<--keeptmp>
+         
+Don't remove the tmpdir when complete (usefull for debugging)
+
+=item B<--filelist>
+         
+Specify a file that contains a list of input filenames instead of using those from the command line
+
+=item B<--slice_step>
+         
+Specify a slice spacing, this is typically the Z dimension
+
+=item B<--slice_start>
+         
+Specify a slice start, this is typically the Z dimension
+
+=item B<--rgb>
+         
+Convert the data as RGB resulting in a 4D file
+
+=item B<--depth>
+         
+Convert the data at the desired bitdepth. Currently only 8 (byte) and 16 (unsigned short) are supported.
+
+=back
+
+=head1 AUTHOR
+
+Problems or Comments to: Andrew Janke - B<a.janke@gmail.com>
+
+=cut
+
+

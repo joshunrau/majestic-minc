@@ -1,0 +1,26 @@
+2007-11-23  Claude Lepage <claude@bic.mni.mcgill.ca>
+	* extend to minc2
+
+2007-11-13  Claude Lepage <claude@bic.mni.mcgill.ca>
+	* fixed some string manipulations that were causing 
+          segmentation faults
+
+2005-04-07  Andrew Janke  <a.janke@gmail.com>
+
+	* removed multiple #def MALLOC's replaced with GI_MALLOC
+	    and friends as this was causing volume_io clashes
+	* changed include orders and added #ifdefs for headers
+	* rewrote design_matrix input routine to use volume_io
+	    so that comments are possible.
+	* rewrite of input routine also fixed an esoteric bug
+	    that could happen with certain filenames in certain
+		conditions that would cause incomplete reading of 
+		the file
+
+2005-02-04  Andrew Janke  <rotor@bic.mni.mcgill.ca>
+
+	* Fixed autoconfiscation and epm-header build stuff
+
+2003-12-17  Jason Lerch	<jason@bic.mni.mcgill.ca>
+
+	* added autoconfiscation

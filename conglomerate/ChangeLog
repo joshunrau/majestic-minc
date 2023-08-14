@@ -1,0 +1,287 @@
+2014-09-23  Claude Lepage <claude@bic.mni.mcgill.ca>
+	* fixed compute_icbm_vols: account for volume of voxel (0.5mm or 1.0mm)
+          and accept multiple surfaces for the brain mask
+        * extended sphere_resample_obj to resample a surface based on a
+          surface map of different size (for hi-res surfaces)
+
+2016-09-16  Claude Lepage <claude@bic.mni.mcgill.ca>
+	* modifications to print_world_values.c
+
+2011-04-27  Claude Lepage <claude@bic.mni.mcgill.ca>
+	* fixed bug in sphere_resample_obj for parsing of lines with 
+          leading spaces
+
+2009-11-20  Claude Lepage <claude@bic.mni.mcgill.ca>
+	* extended mincdefrag for large volumes
+
+2008-12-19  Claude Lepage <claude@bic.mni.mcgill.ca>
+	* added rgb to volume_object_evaluate for DTI maps
+
+2008-01-08  Claude Lepage <claude@bic.mni.mcgill.ca>
+	* added sphere_resample_obj.in for resampling an object
+
+2007-12-20  Claude Lepage <claude@bic.mni.mcgill.ca>
+	* removed -mask_binvalue from mincmask.c and fixed the old way of
+          thresholding for the mask
+	* removed stx_segment and moved it to registration package
+
+2007-10-15  Claude Lepage <claude@bic.mni.mcgill.ca>
+	* move all obj tools to bicpl/tools where they should belong
+
+2007-05-31  Claude Lepage <claude@bic.mni.mcgill.ca>
+	* fixed convex_hull.c
+        * fixed surface_mask.c and surface_mask2.c to save output with same dimensions
+          order as original image (was always z, y, x before)
+        * added -mask_binvalue to mincmask.c
+        * fixed stx_segment to use mincmask with -mask_binvalue
+        * created clean_surface_labels.c
+
+2007-01-30  Claude Lepage <claude@bic.mni.mcgill.ca>
+        * add icbm_make_templates.pl
+
+2006-06-22  Claude Lepage <claude@bic.mni.mcgill.ca>
+	* modify multispectral_stx_registration for new pipeline
+        * use model icbm_avg_152_t1_tal_nlin_symmetric_VI in nlfit_smr
+
+2006-06-01  Claude Lepage <claude@bic.mni.mcgill.ca>
+	* fix a cast in dump_vertex_normal_diffs.c
+
+2006-05-12  Claude Lepage <claude@bic.mni.mcgill.ca>
+	* create new convert_object to toggle file format between ascii/binary
+	for surface .obj files.
+	* Bump version to 1-6-3.
+
+2006-05-04  Claude Lepage <claude@bic.mni.mcgill.ca>
+	* Change perl scripts from .pl to .in and remove path dependencies
+	* Bump version to 1-6-2.
+
+2006-04-10  Claude Lepage <claude@bic.mni.mcgill.ca>
+	* Fix the same small bug in mincdefrag and mincskel for image
+          bounds checking
+	* Bump version to 1-6-1.
+
+2006-03-17  Claude Lepage <claude@bic.mni.mcgill.ca>
+	* Add mincdefrag and mincskel
+	* Bump version to 1-6.
+
+2006-02-26  Jonathan Harlap <jharlap@bic.mni.mcgill.ca>
+        * Update version to 1.5
+		
+2005-11-09  Jonathan Harlap <jharlap@bic.mni.mcgill.ca>
+	* Add print_world_values
+	
+2005-10-27  Andrew Janke  <a.janke@gmail.com>
+	* updated smooth_mask.pl to use mni_perllib
+
+2005-08-15  Bert Vincent <bert@bic.mni.mcgill.ca>
+	* Add regional_thickness and remap_to_lobes
+	
+2005-05-31  Bert Vincent <bert@bic.mni.mcgill.ca>
+	* Fix smooth_mask to use DefaultArgs as it used to.
+	
+2005-05-30  Bert Vincent <bert@bic.mni.mcgill.ca>
+	* Add suppress_fat
+	* More fixes to multispectral_stx_registration.pl
+	
+2005-05-26  Bert Vincent <bert@bic.mni.mcgill.ca>
+	* Add mincmask
+	* More minor build tweaks
+
+2005-05-25  Bert Vincent <bert@bic.mni.mcgill.ca>
+	* Build fixes
+	* Added orphan perl scripts
+	
+2005-03-18  Andrew Janke  <a.janke@gmail.com>
+	* replaced all sqrtf()'s with sqrt() for OSX build
+	
+2005-03-01  Bert Vincent   <bert@bic.mni.mcgill.ca>
+	* Added normalize_pet
+	
+2004-04-22  Bert Vincent   <bert@bic.mni.mcgill.ca>
+	* Added find_peaks
+	* Update version to 1.4
+	
+2004-04-07  Bert Vincent   <bert@bic.mni.mcgill.ca>
+	* Added match_tags
+	
+2004-02-05  Jason Lerch	   <jason@bic.mni.mcgill.ca>
+
+	* surface_mask2 now outputs volumes in the same dimension order as
+	the input volume.
+
+2003-11-17  Steve ROBBINS  <stever@bic.mni.mcgill.ca>
+
+	* COPYING: New.  License text copied from bicpl.
+
+	* ParseArgv.c:
+	* ParseArgv.h: Remove.  These files are now installed as part of minc.
+	
+	* Makefile.am (volume_object_evaluate_SOURCES): Remove ParseArgv.c.
+
+2003-10-14  Steve M. Robbins  <steve@nyongwa.montreal.qc.ca>
+
+	* ascii_binary.c: Delete.  This program was moved to package
+	bicpl on 2001-04-02 and the former is a prerequisite of this
+	package.
+
+	* Makefile.am (bin_PROGRAMS): Remove ascii_binary.
+
+2003-09-08  Jason Lerch    <jason@bic.mni.mcgill.ca>
+
+	* added a -output_binary_mask option to surface_mask2
+
+2003-08-29  Jason Lerch    <jason@bic.mni.mcgill.ca>
+
+	* fixed a bug in surface_mask2 which caused it to fail when the
+	histogram of the input volume was skewed and the volume had a
+	datatype other than NC_BYTE. Now reads in volume using
+	MI_ORIGINAL_TYPE. 
+
+2003-04-30  Steve ROBBINS  <stever@bic.mni.mcgill.ca>
+
+	* average_objects.c: Completed the code.
+
+2003-03-02  Steve M. Robbins  <steve@nyongwa.montreal.qc.ca>
+
+	* configure.ac: Set version to 1.3.
+
+2003-03-02  Steve M. Robbins  <steve@nyongwa.montreal.qc.ca>
+
+	Release 1.2.
+
+	* flatten_polygons.c:
+	* fit_curve2.c:
+	* colour_object.c:
+	* two_surface_resample.c (main): 
+	* refine_mesh.c (main): 
+	* compute_bounding_view.c (main): 
+	* box_filter_volume_nd.c (box_filter_volume): 
+	* box_filter_volume.c (main): Remove unused variable declarations.
+
+	* surface_mask2.c: 
+	* make_line_links.c: 
+	* fit_3d.c: 
+	* fit_curve.c: 
+	* find_buried_surface.c: Remove unused function declarations.
+
+2003-02-25  Steve ROBBINS  <stever@diomedes.bic.mni.mcgill.ca>
+
+	* surface_mask2.c (main): Return zero on success.
+
+2003-01-25  Steve M. Robbins  <steve@nyongwa.montreal.qc.ca>
+
+	* configure.ac: Set version to 1.2.
+
+2003-01-25  Steve M. Robbins  <steve@nyongwa.montreal.qc.ca>
+
+	* configure.ac: Set version to 1.1.
+
+	* Makefile.am (m4_files): Add m4/smr_CGAL_MAKEFILE.m4.
+
+2002-04-06  Steve M. Robbins  <steve@nyongwa.montreal.qc.ca>
+
+	* marching_cubes: Get the voxel_to_world_transform from
+	volume_input structure.  Patch from John Sled.
+
+	* Makefile.am (bin_PROGRAMS): Add marching_cubes.
+
+2002-04-06  Steve M. Robbins  <stever@bic.mni.mcgill.ca>
+
+	* marching_cubes.c: Copied the RCS file
+	~david/Source/Marching_cubes/RCS/marching_cubes.c,v to the CVS
+	repository.  After checkout, copied the (unchecked-in)
+	marching_cubes.c file overtop.
+
+2001-11-12  Jason Lerch       <jason@bic.mni.mcgill.ca>
+
+	* added ParseArgv.{c,h}
+	* volume_object_evaluate.c: added ParseArgv includes, added
+	options letting the user specify whether they want to use linear,
+	nearest_neighbour, or cubic interpolation in the evaluation.
+	* Makefile.am: added volume_object_evaluate_SOURCES with
+	ParseArgv.c
+	
+2001-11-07  Steve M. Robbins  <steve@nyongwa.montreal.qc.ca>
+
+	* make_gradient_volume.c (main): Correct parameter ordering
+	for create_gradient_volume() call.
+	(create_gradient_volume): Output magnitude rather than squared
+	magnitude.  Set the real_range on output volume correctly.
+
+2001-10-28  Steve M. Robbins  <steve@nyongwa.montreal.qc.ca>
+
+	* mincresample.c:
+	* mincresample.h: Removed.  Was a 1996 version of the files from
+	MINC.
+
+	* Makefile.am: Removed all traces of mincresample.  Add 
+	AUTOMAKE_OPTIONS, ACLOCAL_AMFLAGS and EXTRA_DIST so that
+	"make distcheck" works.
+
+	* tagtominc.c (main): Bugfix.  Pass tag_id as the structure
+	ID list, not the patient ID list.
+
+	* README: New.  Describes the usage of some of these
+	utilities.
+
+	* TODO:
+	* NEWS: New.
+
+	* configure.ac: Use AC_PROG_LIBTOOL instead of AM_.
+
+	* autogen.sh: Add explanatory text if directory m4 is not present.
+
+2001-10-22  Steve M. Robbins  <steve@nyongwa.montreal.qc.ca>
+
+	* *.c: Replace <internal_volume_io.h> by
+	<volume_io/internal_volume_io.h>.  Replace <images.h> and
+	<numerical.h> by <bicpl/...>.
+
+	* configure.in: Do not check for header <numerical.h>, nor for
+	<internal_volume_io.h>.  Do not probe for C++ compiler.
+
+2001-09-24  Jason Lerch   <jason@bic.mni.mcgill.ca>
+
+	* minc_to_rgb.c: Changed UNSIGNED_LONG to UNSIGNED_INT
+
+2001-09-06  Jason Lerch   <jason@bic.mni.mcgill.ca>
+
+	* surface_mask2: Changed the logic so that an explicity binary
+	volume is created which is used to mask the original volume. Also
+	forced the inclusion of the object boundaries in the mask.
+
+2001-06-04  Peter Neelin  <neelin@bic.mni.mcgill.ca>
+
+	* print_all_label_bounding_boxes: Fixed test for y_max that was
+	testing against the xw coordinate, rather than yw.
+	
+	
+2001-05-11  Steve M. Robbins  <steve@nyongwa.montreal.qc.ca>
+
+	* Update: Add files in ~david/Source/Batch_processing that did not
+	have an associated RCS file.  Add subdirectories Conglomerate and
+	Csh.  The files "test.obj" and "tt.obj" were converted to ascii
+	format.  Other obvious junk was removed, mostly files full of
+	curvature numbers, and the like.  This is tagged with
+	David-2001-05-11.
+
+	* Update: Updated all the current files from the checked-out
+	versions in ~david/Source/Batch_processing.  This is tagged with
+	David-RCS-update.
+
+	* RCS: The first import into CVS is a straight copy of
+	~david/Source/Batch_processing/RCS, plus this ChangeLog file.
+	This collection of files is tagged David-RCS.
+
+	* symlinks: The following symlinks were replaced by their target
+	files: test.obj, tt.obj.
+
+	* symlinks: The following symlinks were removed:
+	00100_81920.obj.gz, 00101, MNE.mnc,
+	phantom_1-0mm_normal_wht_20480.obj, 00100_20480.obj.gz.
+
+
+	* Batch_processing: Copied all of ~david/Source/Batch_processing
+	except "RCS/test_dynamic.c,v" and "sean", which were
+	read-protected.  Both files are old, dating to February 1996.  For
+	"test_dynamic.c", the checked-out file is newer, in any case.

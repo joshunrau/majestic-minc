@@ -1,0 +1,9 @@
+%product ray_trace
+%copyright 1993-2002 David MacDonald
+%vendor McConnell Brain Imaging Centre
+%packager Andrew Janke <a.janke@gmail.com>
+%license COPYING
+%readme README
+%description ray_trace generates an image files from input voxel and object data
+%version @VERSION@
+%requires bicpl

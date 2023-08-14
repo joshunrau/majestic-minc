@@ -1,0 +1,3 @@
+SUBDIRS(PovRayIO)
+SUBDIRS(VoxBoIO)
+SUBDIRS(RandomForest)

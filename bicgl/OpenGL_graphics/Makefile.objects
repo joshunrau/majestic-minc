@@ -1,0 +1,17 @@
+GL_OBJECTS = \
+                 draw.o \
+                 lights.o \
+                 events.o \
+                 windows.o \
+                 random_order.o \
+                 render.o \
+                 view.o
+
+GRAPHICS_OBJECTS = Graphics/events.o \
+                   Graphics/draw.o \
+                   Graphics/graphics_structs.o
+
+OBJECTS = \
+          $(GL_OBJECTS) \
+          $(GRAPHICS_OBJECTS)
+

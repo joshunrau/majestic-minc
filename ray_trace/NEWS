@@ -1,0 +1,23 @@
+   New in Release 1.0.4
+
+* use BIC/MINC license (like Register/Display) instead of GPL license
+
+   New in Release 1.0.3
+
+* make default lights symmetric to avoid confusing
+  shadows on surfaces
+
+   New in Release 1.0.2
+
+* added new cool colour maps
+* added create_bar_graph.pl for legend box
+* extend the help documentation
+
+   New in Release 1.0.1
+
+* updated build system + epm-header for binary builds
+
+   New in Release 1.0.0
+
+* under CVS control
+* fully autoconfiscated build system

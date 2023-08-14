@@ -1,0 +1,11 @@
+AC_INIT(postf, 1.0.03, [a.janke@gmail.com])
+AC_CONFIG_SRCDIR([./postf.c])
+AM_INIT_AUTOMAKE
+AC_CONFIG_HEADERS([config.h])
+
+AC_PROG_CC
+smr_WITH_BUILD_PATH
+mni_REQUIRE_MINC
+AC_PATH_XTRA
+AC_CONFIG_FILES([Makefile])
+AC_OUTPUT(epm-header)

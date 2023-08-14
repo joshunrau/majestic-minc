@@ -1,0 +1,11 @@
+
+New in version 0.2.1
+* made to conform with "bic" epm style
+
+New in version 0.2
+* fixed compatibility with GCC 4.1
+
+New in version 0.1
+* basic argument handling. supports mandatory arguments, options,
+options with mandatory arguments, and leftover arguments.  has a
+usage() method to display user-friendly-ish usage info

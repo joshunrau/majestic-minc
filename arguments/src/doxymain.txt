@@ -1,0 +1,77 @@
+/*! \mainpage The Arguments command-line arguments parser library
+
+\author Jonathan Harlap
+\date September 2004
+
+Arguments consists of three classes, one each for optional arguments
+(Arguments::Option), mandatory arguments (Arguments::Argument), and the parent (Arguments)
+which provides the parser and usage features.
+
+\section features Features overview
+
+The main features of the library are 
+- a command-line argument parser
+- arbitrary length option names
+- arbitrary option prefix
+- mandatory and optional arguments
+- a container for arguments not assigned to predefined arguments or
+  options (ie, leftovers)
+
+A library with this featureset should be able to handle the needs of
+most command line programs.
+
+\section usage Usage overview
+
+\code
+#include <arguments.h>
+
+int main(int argc, char *argv[]) {
+  // create the parent (parser) object
+  Arguments cArg("test", "program description");
+
+  // add mandatory arguments
+  cArg.addArgument("file1", "file1 description");
+  cArg.addArgument("outputFile", "file to create");
+
+  // add optional arguments
+  cArg.addOption("opt", "first option");
+  cArg.addOption("short", "make shorts");
+  cArg.addOption("byte", "make bytes");
+  cArg.addOption("help", "show this help");
+
+  // create an option with a mandatory argument
+  Arguments::Option cOpt("inclusion", "defines polygon inclusion");
+  cOpt.addArgument("type", "all or some", "all");
+  cArg.addOption(cOpt);
+
+  // run the parser (automatically prints usage info if any errors occur)
+  if(!cArg.parse(argc, argv)) {
+    return 1;
+  }
+  
+  // determine if an option was specified
+  if(cArg.getOption("help")) {
+    // print out usage info
+    cArg.usage();
+    return 0;
+  }
+
+  // access an argument's value
+  string outputFile = cArg["outputFile"];
+
+  // access an option's argument's value
+  string inclusionType;
+  if(cArg.getOption("inclusion"))
+    inclusionType = cArg.getOption("inclusion")["type"];
+  
+  return 0;
+}
+\endcode
+
+\section future Future work
+
+While the library as it stands is fairly complete, possible future
+additions could be Argument type and range checking, and error
+handling via exceptions rather than simply booleans.
+
+*/

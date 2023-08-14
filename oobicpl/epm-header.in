@@ -1,0 +1,10 @@
+%product oobicpl
+%copyright 2000-2006 Jason Lerch
+%vendor McConnell Brain Imaging Centre
+%packager Claude Lepage <claude@bic.mni.mcgill.ca>
+%license COPYING
+%readme README
+%description object-oriented interface to bicpl for C++
+%version @VERSION@
+%requires minc
+%requires bicpl

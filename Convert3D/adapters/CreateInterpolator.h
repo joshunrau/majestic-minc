@@ -1,0 +1,61 @@
+/*=========================================================================
+
+  Program:   C3D: Command-line companion tool to ITK-SNAP
+  Module:    CreateInterpolator.h
+  Language:  C++
+  Website:   itksnap.org/c3d
+  Copyright (c) 2014 Paul A. Yushkevich
+  
+  This file is part of C3D, a command-line companion tool to ITK-SNAP
+
+  C3D is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+ 
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+=========================================================================*/
+
+#ifndef __CreateInterpolator_h_
+#define __CreateInterpolator_h_
+
+#include "ConvertAdapter.h"
+#include "itkSmartPointer.h"
+
+namespace itk {
+  template <class TImage, class TCoordRep> class InterpolateImageFunction;
+}
+
+template<class TPixel, unsigned int VDim>
+class CreateInterpolator : public ConvertAdapter<TPixel, VDim>
+{
+public:
+  // Common typedefs
+  CONVERTER_STANDARD_TYPEDEFS
+
+  CreateInterpolator (Converter *c) : c(c) {}
+
+  // Helper function: get interpolator based on current flag values
+  typedef itk::InterpolateImageFunction<ImageType, double> InterpolatorType;
+
+  void CreateNN();
+  void CreateLinear();
+  void CreateCubic();
+  void CreateSinc();
+  void CreateGaussian(RealVector sigma);
+  void CreateMultiLabel(RealVector sigma);
+
+private:
+  itk::SmartPointer<InterpolatorType> m_Interp;
+  Converter *c;
+};
+
+#endif
+

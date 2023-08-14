@@ -1,0 +1,119 @@
+2014-10-29  Claude Lepage <claude@bic.mni.mcgill.ca>
+	* fix templates to compile free under gcc 4.8.3.
+
+2014-03-28  Claude Lepage <claude@bic.mni.mcgill.ca>
+	* add standard deviation to vertstats_stats
+	* fix bug in mean calculation in vertstats_stats (divide by n, not n+1)
+
+2012-12-18  Tarek Sherif <tsherif@bic.mni.mcgill.ca>
+	* compiles warning-free under gcc 4.6.3.
+
+2012-11-26  Tarek Sherif <tsherif@bic.mni.mcgill.ca>
+	* src/tree.hh: explicitly use std namespace for ptrdiff_t type
+          (in order to compile with new versions of g++).
+
+2010-09-30  Claude Lepage <claude@bic.mni.mcgill.ca>
+        * use BIC/MINC license (like minc) instead of GPL license
+	* read vertstats file as double (now understands scientific notation)
+          (mniVertstatsFile.cc)
+	* correct detection of number of columns in vertstats file
+	  when there are leading/trailing spaces (mniVertstatsFile.cc)
+
+2010-02-22  Claude Lepage       <claude@bic.mni.mcgill.ca>
+	* correct calculation of std dev in vertstats_average
+
+2010-02-14  Andrew L Janke  <a.janke@gmail.com>
+ 	* src/mniVertstatsFile.cc
+ 	* src/mniVertstatsFile.h
+ 	* src/mniVertstatsMath.h
+ 	* src/surface_area_roi.cc
+ 	* src/vertstats_find_peaks.cc
+ 	* src/vertstatsinfo.cc
+ 	* src/white_cortex_validity.cc
+ 	* Changes to all above files for gcc 4.3 thanks to Vlad
+
+2009-07-30  Claude Lepage       <claude@bic.mni.mcgill.ca>
+	* add absolute value to vertstats_math operations
+
+2007-01-23  Claude Lepage       <claude@bic.mni.mcgill.ca>
+	* merge jason/surface_tools into oobicpl
+        * added surface_probability_map.cc - to provide a segmentation map
+        of the surface based on a bunch of individual surface
+        segmentation.
+        * added pcre checks to configure.ac
+        * added object_hemispheres - a little app to create a texture map
+        of the two hemispheres.
+        * removed the white surface checking stuff from the default build.
+
+2006-05-02  Claude Lepage       <claude@bic.mni.mcgill.ca>
+	* fix tree.hh and add include <math.h> to compile with newer
+        C++ compiler
+
+2006-04-27  Claude Lepage       <claude@bic.mni.mcgill.ca>
+        * added epm-header.in and repackage for minc2 m4 files
+
+2004-03-31  Jason Lerch		<jason@bic.mni.mcgill.ca>
+
+	* fixed a bug in mniVertstatsFile.cc which caused the incorrect
+	column to be retrieved if the name of another column was a partial
+	match.
+	* bumped version up to 0.4 for the next "release"
+
+2004-02-24  Jason Lerch	 	<jason@bic.mni.mcgill.ca>
+
+	* added vertstats_average app to create means and sds.
+	* changed vertstatsinfo to vertstats_info
+
+2003-06-30  Jason Lerch		<jason@bic.mni.mcgill.ca>
+
+	* added a close function
+
+2003-03-25  Jason Lerch		<jason@bic.mni.mcgill.ca>
+
+	* header now represented as an n-ary tree
+	* can write files as well
+	* mathematical functions for vectors
+	* massive documentation updates
+	* extra utilities
+	
+2003-01-16  Jason Lerch		<jason@bic.mni.mcgill.ca>
+
+	* multiple updates - in other words, the ChangeLog has not been
+	kept up to date at all ... Will start keeping ChangeLog faithfully
+	again from this point on.
+	
+2002-05-06  Jason Lerch		<jason@bic.mni.mcgill.ca>
+
+	* mniVolume: created a constructor that takes a volume_io struct
+	as an argument.
+
+2002-05-05  Jason Lerch         <jason@bic.mni.mcgill.ca>
+
+	*mniLabelVolume: created a constructor which takes a volume_io
+	struct as an argument.
+	
+2001-10-29  Jason Lerch		<jason@bic.mni.mcgill.ca>
+
+	* mniVolume(.cc,.h}: moved inline functions to the header file.
+	
+2001-09-12  Jason Lerch         <jason@bic.mni.mcgill.ca>
+
+	* mniBaseVolume.h: added several static strings for dimension
+	orders.
+	* mniLabelVolume.{cc,h}: moved the inline functions into the
+	header file.
+	
+2001-08-12  Jason Lerch		<jason@bic.mni.mcgill.ca>
+
+	* mniBaseVolume.cc: fixed (hopefully) the bug inside the voxel to
+	world conversion.
+
+2001-08-12  Jason Lerch		<jason@bic.mni.mcgill.ca>
+
+	* ChangeLog: finally beginning the use of this log
+	* .cvsignore: added by Steve Robbins
+	* mniBaseVolume.cc:
+	* mniLabelVolume.cc:
+	* mniVolume.cc: patch by Steve Robbins - removed default
+	constructors in functions themselves so that this can compile
+	using IRIX CC.

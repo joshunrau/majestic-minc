@@ -1,0 +1,46 @@
+New in Version 0.4.9
+* fix templates to compile free under gcc 4.8.3.
+
+New in Version 0.4.8
+* add standard deviation to vertstats_stats
+* fix bug in mean calculation in vertstats_stats (divide by n, not n+1)
+
+New in Version 0.4.7
+* compiles warning-free under gcc 4.6.3.
+
+New in Version 0.4.6
+* src/tree.hh: explicitly use std namespace for ptrdiff_t type
+  (in order to compile with new versions of g++).
+
+New in Version 0.4.5
+* use BIC/MINC license (like minc) instead of GPL license
+* read vertstats file as double (now understands scientific notation)
+  (mniVertstatsFile.cc)
+* correct detection of number of columns in vertstats file
+  when there are leading/trailing spaces (mniVertstatsFile.cc)
+
+New in Version 0.4.4
+* add absolute value to vertstats_math operations
+* changes for compilation against gcc 4.3
+* correct calculation of std dev in vertstats_average
+
+New in Version 0.4.3
+* merge jason/surface_tools into oobicpl
+
+New in Version 0.4.2
+* fix tree.hh and add include <math.h> to compile with newer
+  C++ compiler
+
+New in Version 0.4.1
+
+* added epm-header for binary packaging
+* Simply repackage the tar ball with good m4 files for minc2
+
+New in Version 0.4
+
+* added library and utility support for handling vertstats files
+
+New in Version 0.1
+* version used in the cortical thickness simulation. Capable of
+handling most volume_io requests, biggest item still missing is more
+intelligent outputting of files.

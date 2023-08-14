@@ -1,0 +1,9 @@
+- Arguments::Argument typing, such that the parser will automagically
+do type conversions and print out pretty error messages if a user
+tries to pass a string into an argument that should be an int, and so
+on.
+
+- Arguments::Option could provide an opposite option name for each
+option, such that -quiet could have the opposite -verbose, ie, that an
+Option could have a defined name for the -no-* version of the option.
+

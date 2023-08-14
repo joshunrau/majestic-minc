@@ -1,0 +1,96 @@
+#!/usr/bin/env perl -w
+
+# a script to check the validity of an automated white cortex
+# extraction against a manually painted slice.
+
+use strict;
+
+use MNI::Startup;
+use MNI::Spawn;
+use Getopt::Tabular;
+use MNI::FileUtilities qw(check_output_dirs);
+
+# global variables
+my ($mask, $Help, $Usage);
+my ($paintedSlice, $whiteCortex, $outputHist, $outputVol);
+my ($sagital, $coronal, $horizontal);
+my ($tmpScan, $tmpMask);
+my ($dimensions);
+
+&Initialise;
+Spawn(['scan_object_to_volume', $paintedSlice, $whiteCortex, $tmpScan]);
+Spawn(['white_cortex_validity', $paintedSlice, $tmpScan, $outputVol]);
+Spawn(['volume_hist', $outputVol, $outputHist]);
+
+sub Initialise {
+
+  MNI::Spawn::SetOptions (strict  => 1);
+  &CreateInfoText;
+  RegisterPrograms([qw(scan_object_to_volume white_cortex_validity 
+                       volume_hist mincinfo mincreshape)]);
+  my @leftOverArgs;
+  my @argTbl = (
+       @DefaultArgs,
+       ["Programme Options", "section"],
+       ["-mask", "string", 1, \$mask,
+        "Mask to use before generating the histogram."],
+       ["-save_histogram", "string", 1, \$outputHist,
+        "Filename to save histogram to."],
+       ["-coronal", "boolean", undef, \$coronal,
+        "Slice painted in the coronal plane."],
+       ["-sagital", "boolean", undef, \$sagital,
+        "Slice painted in the sagital plane."],
+       ["-horizontal", "boolean", undef, \$horizontal,
+        "Slice painted in the horizontal plane."],
+       );
+
+  GetOptions(\@argTbl, \@ARGV, \@leftOverArgs) or die "\n";
+
+
+  if ($sagital) { AddDefaultArgs('white_cortex_validity', '-sagital') }
+  elsif ($coronal) { AddDefaultArgs('white_cortex_validity', '-coronal') }
+  elsif ($horizontal) { AddDefaultArgs('white_cortex_validity', '-horizontal')}
+  else { die "Specify plane of painted slice\n" }
+
+  if ($Clobber) { AddDefaultArgs('volume_hist', '-clobber') }
+
+  AddDefaultArgs('volume_hist', ['-text', '-auto_range', '-bins', "4"]);
+
+  # get file arguments
+  $paintedSlice = shift @leftOverArgs or die $Usage;
+  $whiteCortex = shift @leftOverArgs or die $Usage;
+  $outputVol = shift @leftOverArgs or die $Usage;
+
+  # create temporary files
+  $tmpScan = "${TmpDir}/scan.mnc";
+  $tmpMask = "${TmpDir}/mask.mnc";
+  unless ($outputHist) { $outputHist = "${TmpDir}/hist.txt" }
+
+  # make sure temp dir exists or is creatable
+  if ($Execute) { check_output_dirs($TmpDir) }
+
+  if ($mask) {
+    # brute force: reshape the mask no matter what. Ideally there should be 
+    # a check to make sure that this is necessary.
+    Spawn(['mincinfo', '-dimnames', $outputVol], stdout => \$dimensions);
+    chomp $dimensions;
+    $dimensions =~ s/\s+/,/g;
+    Spawn(['mincreshape', '-dimorder', $dimensions, $mask, $tmpMask]);
+    AddDefaultArgs('volume_hist', ['-mask', $tmpMask]);
+  }
+}
+
+sub CreateInfoText {
+  $Usage = "$ProgramName [options] painted_slice.mnc white_cortex.obj output_volume.mnc\n";
+
+  $Help = <<HELP;
+
+Verifies the accuracy of an automated white cortex extraction by
+checking it against a manually painted slice.  
+HELP
+
+  Getopt::Tabular::SetHelp($Help, $Usage);
+}
+
+
+

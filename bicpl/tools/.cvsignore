@@ -1,0 +1,10 @@
+.deps
+.libs
+*.o
+Makefile.in
+Makefile
+bicobj2oogl
+bicobj2ply
+make_mesh_map
+ascii_binary
+bicobj2vtk

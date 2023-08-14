@@ -1,0 +1,27 @@
+AC_INIT
+AC_CONFIG_SRCDIR([src/mrisim/mrisim.h])
+AC_CONFIG_AUX_DIR(ac_config_aux)
+AM_INIT_AUTOMAKE(mrisim, 1.0.3)
+AM_CONFIG_HEADER([config.h])
+
+AC_REVISION($Revision: 1.6 $)
+
+AC_PROG_LIBTOOL
+
+AC_PROG_INSTALL
+AC_PROG_LN_S
+AC_PROG_MAKE_SET
+
+AM_PROG_CC_C_O
+AC_PROG_CXX
+
+smr_WITH_BUILD_PATH
+
+mni_REQUIRE_MINC
+
+AC_CONFIG_FILES([
+Makefile 
+])
+AC_OUTPUT([
+epm-header
+])

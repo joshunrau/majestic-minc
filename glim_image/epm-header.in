@@ -1,0 +1,9 @@
+%product glim-image
+%copyright 1993-2004 Jonathan Taylor
+%vendor McConnell Brain Imaging Centre
+%packager Andrew Janke <rotor@bic.mni.mcgill.ca>
+%license COPYING
+%readme README
+%description Statistics on volumes
+%version @VERSION@
+%requires minc

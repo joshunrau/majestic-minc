@@ -1,0 +1,52 @@
+See INSTALL for generic installation instructions.
+
+		Shared or Static libraries?
+		---------------------------
+
+By default, only a static version (i.e. libbicpl.a) will be produced.
+A shared version of the library may be enabled using the configure
+flag "--enabled-shared".  See also "--disable-static".
+
+
+		Finding 3rd Party Libraries
+		---------------------------
+
+Bicpl depends on several libraries not typically available from the OS 
+vendor, e.g. minc and netcdf.  These must be installed before bicpl can
+be configured.  If they are installed in non-standard locations, you
+may need to specify "-I" and "-L" options for the compiler, example:
+
+	./configure CPPFLAGS="-I/foo/include" LDFLAGS="-L/foo/lib"
+
+As a shortcut for the common case of headers in "/foo/include" and
+library in "/foo/lib", you can use the --with-build-path option:
+
+	./configure --with-build-path=/foo
+
+This is equivalent to setting CPPFLAGS and LDFLAGS, as in the previous
+example.  If you have software installed in two or more places, e.g.
+/foo and /bar, concatenate them using colons:
+
+	./configure --with-build-path=/foo:/bar
+
+
+
+		Image I/O
+		---------
+
+The bicpl library includes functions for reading and writing a (2D)
+image file.  The format of this file is must be chosen at configure
+time, using one of the following configure options.
+
+    Library			       Configure Option
+    -------			       ----------------
+    Portable PixMap (PPM) format       --with-image-ppm
+    IRIS image format (from SGI)       --with-image-sgi
+
+
+You need to have the requisite library installed in order to build bicpl 
+with it.  The configure script will probe for the library requested.
+
+If the library is installed but not found, see the previous section
+on finding 3rd party libraries.
+

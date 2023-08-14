@@ -1,0 +1,110 @@
+		average_objects
+		---------------
+
+  average_objects output.obj input1.obj [input2.obj [input3.obj ...]]
+
+Reads a number of input files, which may be of any type as long
+as each has the same number of points.  Output a file of the type
+of input1.obj, but with the point position set to the mean position
+of the corresponding points in the input files.
+
+
+		average_surfaces
+		----------------
+
+  average_surfaces output.obj  none|rms_file  none|variance_file n_groups
+                   input1.obj [input2.obj...]
+
+Reads a number of surface (POLYGONS) files, and outputs the mean surface,
+computed as for average_objects.  In addition, the RMS distance and
+inverse covariance matrix can be written to files.
+
+
+		create_grid
+		-----------
+
+  create_grid out.obj x|y|z slice_position [x|y|z line_position] ...
+
+The file out.obj consists of a set of lines in the specified plane
+X=slice_position (or Y= or Z=).  The set of lines desired are
+specified in the following pairs of arguments.
+
+
+
+		dump_curvatures
+		---------------
+
+  dump_curvatures  object_file  output_file  [curvature_distance]
+
+The parameter curvature_distance defaults to 4.
+
+
+
+		evaluate
+		--------
+
+  evaluate  volume.mnc  input.obj  output.txt [degree]
+
+degree is an integer, passed to evaluate_volume_in_world(), where 
+-1 = nearest-neighbour, otherwise use an order-(degree+1) 
+polynomial to interpolate
+
+Typically used for vertex colouring of objects.  For each vertex of the
+geometrical object, the point is located in the volume.  The volume values 
+are written to the output text file in the order that the vertices are 
+visited.  Each object in the BIC obj file is processed in sequence.
+
+
+
+		make_slice
+		----------
+
+  make_slice in.mnc out.obj  x|y|z  v|w pos [xt] [yt]
+
+The file in.mnc sets the coordinate systems.  The output
+consists of a polygon or quadmesh in the plane "X=pos" 
+(Y=pos, Z=pos, respectively), in either the voxel or
+world coordinate system depending on the 4th parameter.
+The optional parameters "xt" and "yt" specify the number
+of rows and columns in the mesh; the values "2 2" are
+the most useful.
+
+
+
+		set_line_width
+		--------------
+
+  set_line_width in.obj out.obj [thickness]
+
+Copies in.obj to out.obj, changing the thickness of any
+LINES objects found.  The default thickness is 1.0.
+
+
+
+		set_object_colour
+		-----------------
+
+  set_object_colour in.obj out.obj colour_name
+
+Copies in.obj to out.obj changing the colour of each object
+in the file.
+
+  set_object_colour in.obj
+
+Prints the colour of each object in the file.
+
+
+
+		subdivide_polygons
+		------------------
+
+  subdivide_polygons  input.obj  [output.obj]  [n_polygons]
+
+Subdivides any polygons in the file.  If the output file is not
+specified, the input file is overwritten with the newly subdivided
+objects.  
+
+If n_polygons is specified, the polygons will be resampled to that
+size.  Otherwise, the number of polygons in the output will be four
+times the input size.
+

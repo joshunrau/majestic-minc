@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleExecutable</key>
+	<string>Convert3DGUI</string>
+	<key>CFBundleIconFile</key>
+	<string>c3dgui</string>
+	<key>CFBundleIdentifier</key>
+	<string>org.itksnap.c3dgui</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleName</key>
+	<string>Convert3DGUI</string>
+	<key>CFBundleDisplayName</key>
+	<string>Convert3D GUI Console</string>
+	<key>CFBundleVersion</key>
+	<string>59</string>
+	<key>CFBundleShortVersionString</key>
+	<string>@CONVERT3D_VERSION_FULL@</string>
+	<key>CFBundleSignature</key>
+  <string>itksnap</string>
+  <key>NSPrincipalClass</key>
+  <string>NSApplication</string>
+  <key>NSHighResolutionCapable</key>
+  <string>True</string>
+</dict>
+</plist>
+

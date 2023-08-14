@@ -1,0 +1,17 @@
+Version 1.1.2
+
+* fixed some string manipulations that were causing
+  segmentation faults
+* extension to minc2
+
+Version 1.1.1
+
+* Simply repackage the tar ball with good m4 files for minc2
+
+Version 1.1
+
+* updated build for OSX
+
+Version 1.0
+
+* first release to the public with full autoconfiscation.

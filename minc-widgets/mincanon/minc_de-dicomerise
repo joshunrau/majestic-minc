@@ -1,0 +1,35 @@
+#! /usr/bin/env perl
+#
+# Andrew Janke - a.janke@gmail.com
+#
+# Copyright Andrew Janke, The University of Queensland.
+# Permission to use, copy, modify, and distribute this software and its
+# documentation for any purpose and without fee is hereby granted,
+# provided that the above copyright notice appear in all copies.  The
+# author and the University make no representations about the
+# suitability of this software for any purpose.  It is provided "as is"
+# without express or implied warranty.
+#
+# USE AT OWN RISK!  THIS MAY MUNGE YOUR MINC FILES HEADER!
+
+use warnings "all";
+use File::Basename;
+
+$me = &basename($0);
+if($#ARGV == -1){
+   die "\n+++WARNING: THIS SCRIPT MAY MUNGE YOUR FILE PERMANENTLY!+++\n\n".
+       "Usage: $me <file1_to_clean.mnc> [<file2.mnc> [...]]\n\n";
+   }
+
+foreach $file (@ARGV){ 
+   print " + Working on $file\n";
+
+   (@yukky_vars) = split(' ', `mincinfo -varnames $file`);
+
+   foreach $var (grep {/dicom/} @yukky_vars){
+      foreach (split(' ', `mincinfo -varatts $var $file`)){
+         print " | [$file] - removing $var:$_\n";
+         system('minc_modify_header', '-delete', "$var:$_", $file) == 0 or die;
+         }
+      }
+   }

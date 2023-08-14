@@ -1,0 +1,7 @@
+Mar.  4, 1996  :  Made X windows correctly positioned, using XSetWMProperties()
+Mar. 21, 1996  :  Corrected shift key handling.
+Apr. 10, 1996  :  Corrected window position computation.
+Apr. 16, 1996  :  Made 'cc -fullwarn -lint' proof
+Aug. 23, 1996  :  Fixed the macro invocation in draw_polygons_include.c
+Nov.  7, 1996  :  Upgraded to Mesa 2.0, fixed queries of double buffer with
+                  no window created.

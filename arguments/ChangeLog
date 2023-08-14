@@ -1,0 +1,5 @@
+2007-05-10  Andrew L Janke   <a.janke@gmail.com>
+        * Added epm-header.in and fiddled with configure.ac
+
+2007-02-07  Jonathan Harlap     <jharlap@bic.mni.mcgill.ca>
+        * updated arguments.h to fix compatibility with GCC 4.1

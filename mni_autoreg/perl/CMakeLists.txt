@@ -1,0 +1,32 @@
+SET(PERL ${PERL_EXECUTABLE})
+
+CONFIGURE_FILE(autocrop.in ${CMAKE_CURRENT_BINARY_DIR}/autocrop @ONLY)
+CONFIGURE_FILE(mritoself.in ${CMAKE_CURRENT_BINARY_DIR}/mritoself @ONLY)
+CONFIGURE_FILE(mritotal.in ${CMAKE_CURRENT_BINARY_DIR}/mritotal @ONLY)
+CONFIGURE_FILE(xfmtool.in ${CMAKE_CURRENT_BINARY_DIR}/xfmtool @ONLY)
+CONFIGURE_FILE(mritotal.cfg.in ${CMAKE_CURRENT_BINARY_DIR}/mritotal.cfg @ONLY)
+CONFIGURE_FILE(mritotal.default.cfg.in ${CMAKE_CURRENT_BINARY_DIR}/mritotal.default.cfg @ONLY)
+CONFIGURE_FILE(mritotal.icbm.cfg.in ${CMAKE_CURRENT_BINARY_DIR}/mritotal.icbm.cfg @ONLY)
+CONFIGURE_FILE(make_model.in ${CMAKE_CURRENT_BINARY_DIR}/make_model @ONLY)
+
+INSTALL(PROGRAMS
+  ${CMAKE_CURRENT_BINARY_DIR}/autocrop
+  ${CMAKE_CURRENT_BINARY_DIR}/mritoself
+  ${CMAKE_CURRENT_BINARY_DIR}/mritotal
+  ${CMAKE_CURRENT_BINARY_DIR}/xfmtool
+  ${CMAKE_CURRENT_BINARY_DIR}/make_model
+#  PERMISSIONS OWNER_EXECUTE OWNER_WRITE OWNER_READ GROUP_EXECUTE GROUP_READ  WORLD_EXECUTE WORLD_READ
+   DESTINATION bin )
+
+# TODO: figure out proper location
+INSTALL(FILES
+  ${CMAKE_CURRENT_BINARY_DIR}/mritotal.cfg
+  ${CMAKE_CURRENT_BINARY_DIR}/mritotal.default.cfg 
+  ${CMAKE_CURRENT_BINARY_DIR}/mritotal.icbm.cfg
+  DESTINATION etc )
+
+
+INSTALL_MAN_PAGES( ${CMAKE_INSTALL_PREFIX}/man
+  autocrop.man1  mritoself.man1  mritotal.man1
+)
+

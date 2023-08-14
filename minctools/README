@@ -1,0 +1,55 @@
+MINC Tools
+
+This package is a collection of tools that work on MINC format
+images.
+
+ * rawtominc, minctoraw, mincextract - format conversion
+ * mincheader, mincdiff, mincinfo, minchistory - file information
+ * mincedit, minc_modify_header - header manipulation
+ * mincresample - arbitrary volume resampling
+ * mincreshape - extraction of volume sub-cubes, image flipping,
+      dimension re-ordering, type conversion
+ * mincconcat - concatenating or interleaving images from multiple
+      files
+ * mincmath - perform simple math on files
+ * minccalc - perform more complicated math on files through an expression
+ * mincaverage - average minc files
+ * mincstats - calculate statistics across voxels of a file
+ * minclookup - lookup table operations for arbitrary re-mappings of
+      intensities
+ * worldtovoxel, voxeltoworld - coordinate conversion
+ * xfmconcat, xfminvert - generalized transformation utilities
+ * mincview - simple image display using xv or ImageMagick
+ * mincpik - generate picture from slice through volume
+
+
+INSTALLATION
+
+Compilation and installation is now done with CMake. Use these steps:
+
+1. Compile
+
+   $ cmake CMakeLists.txt
+   $ make
+
+Note that if you have installed libminc in a non-standard location
+(in this case /opt/local/minc) you will have to tell CMake where to find 
+it as such:
+
+   $ export LIBMINC_DIR=/opt/local/minc
+   $ cmake CMakeLists.txt
+   $ make
+   
+Similarly if you'd like to install minc-tools in this same location you
+will need to do this:
+   
+   $ export LIBMINC_DIR=/opt/local/minc
+   $ cmake -DCMAKE_INSTALL_PREFIX:PATH=/opt/local/minc CMakeLists.txt
+   $ make
+
+
+2. Install
+
+   $ sudo make install
+   
+

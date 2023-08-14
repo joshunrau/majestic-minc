@@ -1,0 +1,112 @@
+#! /usr/bin/env perl
+#
+# Create a colour bar for a legend box.
+#
+
+use strict;
+use warnings "all";
+use Getopt::Tabular;
+use File::Basename;
+use File::Temp qw/ tempdir /;
+
+my($Help, $Usage, $me);
+
+my $min = 0;
+my $max = 1.0;
+my $colour_map = "spectral";
+my $colour_map_file = undef;
+my $bg = "black";
+my $width = 50;
+my $height = 6 * $width;
+
+$me = &basename($0);
+
+$Help = <<HELP;
+| $me creates a colour bar for a legend box.
+|
+| Problems or comments should be sent to: claude\@bic.mni.mcgill.ca
+HELP
+
+$Usage = "Usage: $me [options] output.png\n".
+         "       $me -help to list options\n\n";
+
+my @opt_table = (
+   ["-width", "float", 1, \$width, "width of bar image" ],
+   ["-height", "float", 1, \$height, "height of bar image" ],
+   ["-min", "float", 1, \$min, "minimum range (0-1)" ],
+   ["-max", "float", 1, \$max, "maximum range (0-1)" ],
+   ["-colour", "string", 1, \$colour_map,
+      "colour map (choices are: gray, hot, hot_inv, cold_metal, cold_metal_inv," .
+      "green_metal, green_metal_inv, lime_metal, lime_metal_inv," .
+      "red_metal, red_metal_inv, purple_metal, purple_metal_inv," .
+      "spectral, red, green, blue)" ],
+   ["-usercc", "string", 1, \$colour_map_file,
+      "user-defined colour map file" ],
+   ["-bg", "string", 1, \$bg, "background colour" ]
+   );
+
+# Check arguments
+&Getopt::Tabular::SetHelp($Help, $Usage);
+&GetOptions (\@opt_table, \@ARGV) || exit 1;
+die $Usage if(! ($#ARGV == 0));
+
+my $outfile = shift(@ARGV);
+
+# make tmpdir
+my $tmpdir = &tempdir( "$me-XXXXXXXX", TMPDIR => 1, CLEANUP => 1 );
+
+my $x_size = int $width + 0.5;    # round up
+my $y_size = int $height + 0.5;
+
+$min = $min * ( $y_size - 1 );
+$max = $max * ( $y_size - 1 );
+
+# first create the binary mnc file
+my $i;
+my @data = undef;
+my $packstring = '';
+for($i=0; $i<$y_size; $i++){
+   $data[$i] = $i;
+   $packstring .= 'f';
+}
+my $data = pack($packstring, @data);
+
+open(FH, ">$tmpdir/tmp-float.raw");
+for($i=0; $i<$x_size; $i++){
+   syswrite(FH, $data);
+}
+close(FH);
+
+
+# make minc file
+
+&do_cmd( 'rawtominc', '-clobber', '-float',
+         '-input', "$tmpdir/tmp-float.raw",
+	 '-xstep', 1, '-ystep', 1, '-zstep', 1,
+         '-xstart', 0, '-ystart', 0, '-zstart', 0,
+         '-dimorder', 'xspace,yspace,zspace',
+         "$tmpdir/bar.mnc", $x_size, $y_size, 1 );
+
+# make .rgb bar image using ray_trace
+
+my @colour_args = ();
+if( defined $colour_map_file ) {
+  push @colour_args, "-usercc";
+  push @colour_args, $colour_map_file;
+} else {
+  push @colour_args, "-${colour_map}";
+}
+
+&do_cmd( 'make_slice', "$tmpdir/bar.mnc", "$tmpdir/slice.obj", 0, 0, 0, 0, 0, 1 );
+&do_cmd( 'ray_trace', '-output', "$tmpdir/bar.rgb", '-light', '-bg', $bg,
+         '-ortho', '-top', '-size', $x_size, $y_size, '-window_width', $x_size,
+         @colour_args, $min, $max, "$tmpdir/bar.mnc", 0, 1,
+         "$tmpdir/slice.obj" );
+
+# convert from .rgb to .png
+
+&do_cmd('convert', "$tmpdir/bar.rgb", $outfile );
+
+sub do_cmd {
+   system(@_) == 0 or die "Failed: @_\n";
+}

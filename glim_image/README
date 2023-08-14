@@ -1,0 +1,66 @@
+README
+======
+
+glim_image is a tool for running general linear models across voxels
+of multiple MINC images. 
+
+Brief documentation 
+
+1. Input file format:
+   <full path to minc file 1> <column1> [column2] .. [columnN]
+   
+   example :
+   
+   /full/path/subject1_smooth_grey.mnc 1 15
+   /full/path/subject2_smooth_grey.mnc 1 17
+   /full/path/subject3_smooth_grey.mnc 1 17
+   
+   Where 1- intercept term and 15-17 are regression variables (for example MMSE scores)
+   
+2. Command-line parameters:
+
+   -t_stat <output_file.mnc> t_stat voxel column N   - requests to perfom t-statistics on column N
+   -t_stat <output_file.mnc> beta   voxel matrix '<a1> [a2] ...' - will output weighet sum of the regression results
+   -search <mask file>                               - applies the mask (binary)
+   -family <exponential family>  - one of the following:
+      gaussian
+      gamma
+      poisson
+      binomial
+      inverse_gaussian
+      quasi 
+      chi_squared
+      exponential
+   -link <link function> - one of the following:
+      logit  
+      probit
+      c-log-log
+      identity
+      inverse
+      inv_squared
+   -var_func <variance function> - one of the following:
+      constant 
+      mu
+      mu_squared
+      mu_one_minus_mu
+      mu_cubed
+
+
+3. Example for performing DBM-style analysis
+
+  Contents of input.glim:
+
+  /path/patient01_jacobian_det.mnc 1 0
+  /path/patient02_jacobian_det.mnc 1 0
+  /path/patient03_jacobian_det.mnc 1 0
+  /path/control01_jacobian_det.mnc 1 1
+  /path/control02_jacobian_det.mnc 1 1
+  /path/control03_jacobian_det.mnc 1 1
+  
+
+  Command line to produce t-stats map of areas where local jacobian is bigger in control then in patients 
+  (negative t-values will show the oposite) withing brain (note brain_mask.mnc):
+  
+   glim_image input.glim -t_stat output_t-stat.mnc t_stat voxel column 1 -search brain_mask.mnc 
+  
+  

@@ -1,0 +1,265 @@
+#LyX 1.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 221
+\textclass linuxdoc
+\language english
+\inputencoding auto
+\fontscheme default
+\graphics default
+\paperfontsize default
+\spacing single 
+\papersize Default
+\paperpackage a4
+\use_geometry 0
+\use_amsmath 0
+\use_natbib 0
+\use_numerical_citations 0
+\paperorientation portrait
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\defskip medskip
+\quotes_language english
+\quotes_times 2
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+
+\layout Title
+
+Vertstats and friends
+\layout Author
+
+Jason Lerch
+\layout Date
+
+Version 1: April 2003
+\layout Standard
+
+
+\begin_inset LatexCommand \tableofcontents{}
+
+\end_inset 
+
+
+\layout Section
+
+Introduction
+\layout Standard
+
+The 
+\emph on 
+vertstats
+\emph default 
+ file format is designed to hold auxilliary information about each vertex
+ in a surface model.
+ This can be some metric about each vertex, such as cortical thickness or
+ curvature, or it can be resulting information from a statistical model.
+ The file format is agnostic about the type of values it holds, it is, however,
+ currently limited to scalar values only at each vertex.
+\layout Standard
+
+The goal of the file format is to be easily writeable and readable, to be
+ compatible with the older files that have been generated here at the Brain
+ Imaging Centre, and at the same time be extensible enough to fill all the
+ needs that this type of data might have.
+\layout Standard
+
+A vertstats
+\emph on 
+ 
+\emph default 
+file is a plain text file.
+ It is broken down into three parts.
+ The first is the header, made up of a vaguely XML like hierarchical data
+ structure, and open to any kind of information that can be held as a string.
+ The data section is broken down into a short data header, which contains
+ a name for every data column, followed by the columns of scalar data.
+\layout Standard
+
+The toolkit of dealing with vertstats volumes consists of primarily three
+ components:
+\layout Enumerate
+
+A library, 
+\emph on 
+oobicpl
+\emph default 
+ which consists of input and output functions and mathematical utility functions.
+ Written in C++.
+\layout Enumerate
+
+A set of application packaged with 
+\emph on 
+oobicpl
+\emph default 
+ for obtaining information about vertstats files or performing simple mathematic
+al operations on them.
+\layout Enumerate
+
+A viewer, 
+\emph on 
+brain-view
+\emph default 
+, designed to visualise vertstats files on surfaces.
+\layout Standard
+
+At this point the entire toolkit is under active development and subject
+ to change.
+ You have been warned.
+\layout Section
+
+The File Format
+\layout Subsection
+
+The Header
+\layout Standard
+
+The header looks something like this:
+\layout Verbatim
+
+<header>
+\layout Verbatim
+
+<formula>
+\layout Verbatim
+
+y ~ V2 + V3
+\layout Verbatim
+
+</formula>
+\layout Verbatim
+
+<patient>
+\layout Verbatim
+
+<name>
+\layout Verbatim
+
+John Doe
+\layout Verbatim
+
+</name>
+\layout Verbatim
+
+<birthdate>
+\layout Verbatim
+
+11/01/77
+\layout Verbatim
+
+</birthdate>
+\layout Verbatim
+
+</patient>
+\layout Verbatim
+
+</header>
+\layout Standard
+
+The rules are the following:
+\layout Itemize
+
+Beginning and end tags are required for each element.
+\layout Itemize
+
+Tags take the form of <NAME> and </NAME>
+\layout Itemize
+
+Tags have to be on a line of their own.
+\layout Itemize
+
+The header must begin with <header> and end with </header>.
+\layout Itemize
+
+Any text inside of a header entry is legal outside of <[a-z]+> or </[a-z]+>.
+\layout Itemize
+
+If a header entry contains its own body as well as subheaders, the body
+ must come before any subheader.
+\layout Standard
+
+Certain headers, while not required, have special meaning and are strongly
+ encouraged:
+\layout Description
+
+version A number corresponding to the version of the vertstats file format
+ that was used.
+\layout Description
+
+history A string describing the operations that were performed on this file.
+\layout Description
+
+surface A series of strings, separated by newlines, containing the file
+ locations of geometry files that are associated with this vertstats file.
+ A viewer can parse this bit of information to provide the user some choice
+ about which surfaces to display their data on.
+\layout Subsection
+
+The Data
+\layout Standard
+
+The data part of the 
+\emph on 
+vertstats 
+\emph default 
+file consists of two parts: the first short part is a single line with space
+ separated names for each of the data columns, i.e.:
+\layout Verbatim
+
+adj.r.squared fstatistic intercept slope tstatistic
+\layout Standard
+
+This is followed by the data itself, also space separated for each column,
+ with one line per vertex.
+ 
+\layout Section
+
+The Library
+\layout Standard
+
+The library is fully documented here: 
+\begin_inset LatexCommand \htmlurl[http://www.bic.mni.mcgill.ca/users/jason/vertstats/oobicpl]{http://www.bic.mni.mcgill.ca/users/jason/vertstats/oobicpl}
+
+\end_inset 
+
+, documentation generated by doxygen but unfortunately still somewhat disorganis
+ed.
+\layout Standard
+
+Briefly, the library has the ability to read, write, and manipulate vertstats
+ files and their simpler predecessor.
+ Data is stored as an n-ary tree for the header, a vector of strings for
+ the dataheader, and vectors of floats for the actual data.
+ There are a series of templated math functions to perform simple operations
+ such as addition and multiplication of vectors.
+ 
+\layout Section
+
+The utility applications
+\layout Standard
+
+There are at this point four utility applications that are packaged with
+ the oobicpl library:
+\layout Description
+
+vertstatsinfo provides basic information about a vertstats file; allows
+ one to interrogate the header; provides very basic statistics.
+\layout Description
+
+vertstats_extract extracts a single column of data to stdout.
+ Useful if one has to interact with older tools or for simple format conversions.
+\layout Description
+
+vertstats_colour_object same as 
+\emph on 
+colour_object
+\emph default 
+, but works with vertstats files.
+\layout Description
+
+vertstats_math Modelled on 
+\emph on 
+mincmath
+\emph default 
+, performs simple mathematical routines.
+\the_end

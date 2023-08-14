@@ -1,0 +1,18 @@
+SHORT TERM
+----------
+
+* Volume output: allow more options to be passed to the output method,
+so that the user of the library can potentially output the volume in a
+different data-type than what they loaded it in.
+
+* Documentation: allow for the automatic generation of the doxygen
+documentation. 
+
+
+LONG TERM
+---------
+
+* Templates: create a template class which works directly with minc
+(as opposed to volume_io) and uses the netcdf data-type as the
+template type. Should allow for better memory usage and speed
+optimisations, but will lose the benefits of the volume_io caching.

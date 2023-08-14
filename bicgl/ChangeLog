@@ -1,0 +1,126 @@
+2016-05-31  Robert D. Vincent <robert.d.vincent@mcgill.ca>
+	* multiple: Move all OpenGL-specific drawing code from
+	G_graphics/draw.c to OpenGL_graphics/draw.c
+
+2016-05-27  Robert D. Vincent <robert.d.vincent@mcgill.ca>
+	* multiple: Implement G_exit_loop() so that we can exploit
+	the orderly shutdown features of FreeGLUT when available.
+
+2016-04-19  Robert D. Vincent <robert.d.vincent@mcgill.ca>
+	* Include/graphics_prototypes.h, G_graphics/draw.c,
+	G_graphics/render.c, G_graphics/windows.c,
+	Include/graphics.h, Include/graphics_base.h:
+	Extend shaded modes to permit both "overlay" and "point"
+	modes in addition to filled and wireframe.
+2015-11-13  Robert D. Vincent <robert.d.vincent@mcgill.ca>
+	* Include/graphics_prototypes.h, G_graphics/windows.c,
+	GLUT_windows/windows.c, GLUT_windows/Include/glut_window_prototypes.h,
+	OpenGL_graphics/windows.c,
+	OpenGL_graphics/Include/opengl_graphics_prototypes.h:
+	Added G_set_geometry() and G_create_child_window() calls to
+	accommodate placement and creation of child windows.
+
+2015-10-18  Robert D. Vincent <robert.d.vincent@mcgill.ca>
+	* G_graphics/graphics_structs.c, G_graphics/windows.c,
+	Include/graphics_prototypes.h: Add G_set_current_window()
+	function, and use it in redraw_out_of_date_viewports() to
+	establish the current window when painting in Register.
+
+2015-05-20  Robert Vincent <robert.d.vincent@mcgill.ca>
+	* GLUT_windows/Include/WS_graphics.h:
+	* GLUT_windows/Include/glut_window_prototypes.h:
+	* GLUT_windows/glut_windows.c
+	* G_graphics/windows.c
+	* Include/graphics_prototypes.h
+	* OpenGL_graphics/Include/opengl_graphics_prototypes.h
+	* OpenGL_graphics/windows.c: Add visibility control for windows.
+
+2015-05-20  Robert Vincent <robert.d.vincent@mcgill.ca>
+	* GLUT_windows/glut_windows.c:
+	* Include/graphics_base.h: Add support for more special keys.
+
+2015-05-05  Robert Vincent <robert.d.vincent@mcgill.ca>
+	* GLUT_windows/glut_windows.c: Change initial window size calculation.
+
+2015-04-30  Robert Vincent <robert.d.vincent@mcgill.ca>
+	* Added support for mouse wheel/trackpad scrolling.
+
+2015-04-23  Robert Vincent <robert.d.vincent@mcgill.ca>
+	* Make create_GLUT_window() obey the double_buffer_flag again.
+
+2006-05-05  Claude Lepage <claude@bic.mni.mcgill.ca>
+	* dirty hack to add Include/GL/*.h to enable compilation on BIC SGI
+
+2005-04-02  Steve M. Robbins  <steve@nyongwa.montreal.qc.ca>
+
+	* OpenGL_graphics/colour_def.c: 
+	* OpenGL_graphics/draw.c: Fix cast operations.
+
+	* G_graphics/windows.c (reinitialize_window): Replace preincrement
+	operation on enumerated type (illegal in C++) by if-statement.
+
+2004-06-29  Bert Vincent   <bert@bic.mni.mcgill.ca>
+	* Stub out copy_X_colours() in GLUT_windows/copy_x_colours.c,
+	to avoid linking problems against FreeGlut.
+	
+2001-07-20  Steve ROBBINS  <stever@bic.mni.mcgill.ca>
+
+	* GLUT_windows/Makefile.am (INCLUDES): Include $(X_CFLAGS).
+
+2001-05-22  Steve M. Robbins  <steve@nyongwa.montreal.qc.ca>
+
+	* branch-1_3 merge: Many autoconfig files added.
+
+	* various: Changed include from "foo.h" to "volume_io/foo.h",
+	to "bicpl/foo.h", or to "GL/foo.h" to match current practice.
+
+	* Makefile: Include one other file, namely ../Makefile.include
+	which is provided by either Register or Display.  Removed many
+	extraneous targets; will only build "opengl" library now.
+
+	* Makefile.include: removed.
+
+2001-05-22  Steve M. Robbins  <steve@nyongwa.montreal.qc.ca>
+
+	* GLUT_windows/Makefile:
+	* G_graphics/Makefile:
+	* OpenGL_graphics/Makefile:
+	* Testing/test_graphics.mesa: Restored from ~david/Source/Graphics.
+
+	* GLUT_windows/print_X_colours.c:
+	* G_graphics/events.c:
+	* Include/graphics_info.h:
+	* Include/window_events.h:
+	* IrisGL_graphics/events.c:
+	* OpenGL_graphics/events.c:
+	* Testing/test_globals.c: Removed.
+
+	* tagged as david-source-2001-05-22.  This set of sources is
+	identical to the current contents of
+	~david/Source/Register/Graphics (with this ChangeLog added).
+
+2000-10-07  Steve ROBBINS  <stever@bottom.bic.mni.mcgill.ca>
+
+	* GLUT_windows/Include/glut_window_prototypes.h:
+	* Include/graphics_prototypes.h:
+	* IrisGL_graphics/Include/irisgl_graphics_prototypes.h:
+	* OpenGL_graphics/Include/opengl_graphics_prototypes.h:
+	revert to revision 1.1, the newer version, as 1.2 was the version 
+	copied from the source tarball.
+
+2000-10-07  Steve Robbins  <steve@nyongwa.montreal.qc.ca>
+
+	* tagged as release-1_3: sources copied from ~david/Source/Graphics, 
+	with several files rolled back to a revision that matches that found 
+	in the `Display+register_src_v1.3' tarball.  In addition, the 
+	following files from the tarball matched *no* revision.
+
+	* GLUT_windows/glut_windows.c:
+	* GLUT_windows/Include/glut_window_prototypes.h:
+	* Include/graphics_prototypes.h:
+	* IrisGL_graphics/Include/irisgl_graphics_prototypes.h:
+	* OpenGL_graphics/Include/opengl_graphics_prototypes.h:
+	copied from the `Display+register_src_v1.3' tarball, as
+	no CVS revision matched them.
+
+	

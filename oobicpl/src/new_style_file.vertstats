@@ -1,0 +1,72 @@
+<header>
+<mean>
+
+Call:
+lm(formula = formula(statistics.model))
+
+Residuals:
+      Min        1Q    Median        3Q       Max 
+-0.385728 -0.185464  0.005092  0.101505  0.651959 
+
+Coefficients: (1 not defined because of singularities)
+                Estimate Std. Error t value Pr(>|t|)    
+(Intercept)     3.930673   0.567773   6.923 2.95e-07 ***
+Clinical.state -0.462947   0.166895  -2.774   0.0103 *  
+MMSE            0.026362   0.013333   1.977   0.0591 .  
+AGE            -0.013524   0.006585  -2.054   0.0506 .  
+---
+Signif. codes:  0 `***' 0.001 `**' 0.01 `*' 0.05 `.' 0.1 ` ' 1 
+
+Residual standard error: 0.2857 on 25 degrees of freedom
+Multiple R-Squared: 0.7005,	Adjusted R-squared: 0.6646 
+F-statistic: 19.49 on 3 and 25 DF,  p-value: 9.943e-07 
+
+</mean>
+<formula>
+y ~ Intercept + Clinical.state + MMSE + AGE
+</formula>
+<matrix>
+"File" "Intercept" "Clinical.state" "MMSE" "AGE"
+"/data/dampfschiff/dampfschiff1/lmu/surface_stats/lmu_002_rms_thickness_20mmFWHM.txt" 1 1 20 69
+"/data/dampfschiff/dampfschiff1/lmu/surface_stats/lmu_004_rms_thickness_20mmFWHM.txt" 1 0 30 66
+"/data/dampfschiff/dampfschiff1/lmu/surface_stats/lmu_008_rms_thickness_20mmFWHM.txt" 1 1 22 65
+"/data/dampfschiff/dampfschiff1/lmu/surface_stats/lmu_009_rms_thickness_20mmFWHM.txt" 1 0 30 53
+"/data/dampfschiff/dampfschiff1/lmu/surface_stats/lmu_010_rms_thickness_20mmFWHM.txt" 1 1 25 73
+"/data/dampfschiff/dampfschiff1/lmu/surface_stats/lmu_013_rms_thickness_20mmFWHM.txt" 1 1 14 73
+"/data/dampfschiff/dampfschiff1/lmu/surface_stats/lmu_014_rms_thickness_20mmFWHM.txt" 1 1 10 72
+"/data/dampfschiff/dampfschiff1/lmu/surface_stats/lmu_016_rms_thickness_20mmFWHM.txt" 1 1 21 56
+"/data/dampfschiff/dampfschiff1/lmu/surface_stats/lmu_019_rms_thickness_20mmFWHM.txt" 1 0 30 51
+"/data/dampfschiff/dampfschiff1/lmu/surface_stats/lmu_023_rms_thickness_20mmFWHM.txt" 1 1 24 60
+"/data/dampfschiff/dampfschiff1/lmu/surface_stats/lmu_025_rms_thickness_20mmFWHM.txt" 1 1 17 65
+"/data/dampfschiff/dampfschiff1/lmu/surface_stats/lmu_026_rms_thickness_20mmFWHM.txt" 1 1 23 64
+"/data/dampfschiff/dampfschiff1/lmu/surface_stats/lmu_029_rms_thickness_20mmFWHM.txt" 1 1 29 76
+"/data/dampfschiff/dampfschiff1/lmu/surface_stats/lmu_031_rms_thickness_20mmFWHM.txt" 1 0 29 66
+"/data/dampfschiff/dampfschiff1/lmu/surface_stats/lmu_032_rms_thickness_20mmFWHM.txt" 1 1 23 54
+"/data/dampfschiff/dampfschiff1/lmu/surface_stats/lmu_036_rms_thickness_20mmFWHM.txt" 1 1 19 69
+"/data/dampfschiff/dampfschiff1/lmu/surface_stats/lmu_037_rms_thickness_20mmFWHM.txt" 1 0 29 62
+"/data/dampfschiff/dampfschiff1/lmu/surface_stats/lmu_038_rms_thickness_20mmFWHM.txt" 1 0 29 57
+"/data/dampfschiff/dampfschiff1/lmu/surface_stats/lmu_041_rms_thickness_20mmFWHM.txt" 1 0 28 63
+"/data/dampfschiff/dampfschiff1/lmu/surface_stats/lmu_044_rms_thickness_20mmFWHM.txt" 1 1 18 66
+"/data/dampfschiff/dampfschiff1/lmu/surface_stats/lmu_048_rms_thickness_20mmFWHM.txt" 1 0 30 51
+"/data/dampfschiff/dampfschiff1/lmu/surface_stats/lmu_049_rms_thickness_20mmFWHM.txt" 1 1 24 87
+"/data/dampfschiff/dampfschiff1/lmu/surface_stats/lmu_051_rms_thickness_20mmFWHM.txt" 1 1 23 76
+"/data/dampfschiff/dampfschiff1/lmu/surface_stats/lmu_054_rms_thickness_20mmFWHM.txt" 1 0 29 76
+"/data/dampfschiff/dampfschiff1/lmu/surface_stats/lmu_056_rms_thickness_20mmFWHM.txt" 1 0 29 62
+"/data/dampfschiff/dampfschiff1/lmu/surface_stats/lmu_104_rms_thickness_20mmFWHM.txt" 1 1 11 75
+"/data/dampfschiff/dampfschiff1/lmu/surface_stats/lmu_118_rms_thickness_20mmFWHM.txt" 1 1 24 69
+"/data/dampfschiff/dampfschiff1/lmu/surface_stats/lmu_106_rms_thickness_20mmFWHM.txt" 1 1 27 77
+"/data/dampfschiff/dampfschiff1/lmu/surface_stats/lmu_126_rms_thickness_20mmFWHM.txt" 1 1 21 54
+</matrix>
+</header>
+adj.r.squared fstatistic intercept slope.1 slope.2 slope.3 tstatistic.1 tstatistic.2 tstatistic.3
+0.58349496504642 14.0753593595979 3.42012345788769 -0.49504122229294 0.0308489210371224 -0.0104645279122798 -2.40315200663194 1.87455182395597 -1.28748744149694
+0.45695419092127 8.85367589737449 3.38118958385376 -0.682930399423296 0.0389698911250764 -0.0107777165373723 -2.02932453556061 1.44951211152434 -0.811680852968089
+0.494447957247826 10.1283334072927 3.70754455199219 -0.627569931968832 0.0292273930409248 -0.0131417984858531 -2.24077731759080 1.30630397009751 -1.18925465111212
+0.392697475451567 7.03517405147171 3.64176851624067 -0.459041905627513 0.0359676500447998 -0.0171815595148815 -1.42295007678035 1.39561936991776 -1.34984341867186
+0.301509709107221 5.02881851763067 3.81377696816738 -0.110460780906457 0.0530019130726205 -0.0147221255551097 -0.339040470786777 2.03635069672575 -1.14524243970794
+0.0780082089325558 1.78967798168888 5.49273702527169 -0.612274190003096 -0.0277670914328783 -0.0107275328877818 -1.74084549827978 -0.988239620116358 -0.773032252516033
+0.0668645947012267 1.66878777399403 5.56973409861067 -0.286977996709539 -0.029831531219846 -0.0168314700802172 -1.04301475909415 -1.35717232440794 -1.55041294821857
+-0.0919758638245904 0.213864130027995 3.85435392841777 -0.0756365285469048 -0.0150086108812153 0.00267213130810281 -0.26605303364803 -0.660837561723896 0.238219827458272
+0.440099958858584 8.3363088304828 5.9739806484431 -0.168597927953388 0.0341691889725975 -0.0547946933334467 -0.429184241963382 1.08878919033505 -3.53519617530867
+0.470637949430067 9.2979519529555 4.66620509729802 -0.41938681945016 0.0242918265033132 -0.0313221682676293 -1.42693312468610 1.03458602539449 -2.70099726106187
+0.697585891405899 22.5294242831127 2.73652270668229 -0.700564881923149 0.0754803

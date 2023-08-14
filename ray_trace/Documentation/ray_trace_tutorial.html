@@ -1,0 +1,507 @@
+<html>
+
+<head>
+<title>A Tutorial Introduction to the MNI-ray_trace Software</title>
+</head>
+
+<body>
+
+<h1>A Tutorial Introduction to the MNI-ray_trace Software
+</h1>
+
+David MacDonald
+(david@bic.mni.mcgill.ca)
+
+<ul>
+  <li> <a href="ray_trace_tutorial.html#Introduction">Introduction</a>
+  <li> <a href="ray_trace_tutorial.html#Running">How to Run MNI-ray_trace</a>
+  <li> <a href="ray_trace_tutorial.html#Data">Data for this Tutorial</a>
+  <li> <a href="ray_trace_tutorial.html#Ex1">Example 1: Making a Slice Image</a>
+  <li> <a href="ray_trace_tutorial.html#Ex2">Example 2: Setting the Image Size</a>
+  <li> <a href="ray_trace_tutorial.html#Ex3">Example 3: Setting the Background
+  <li> <a href="ray_trace_tutorial.html#Ex4">Example 4: Setting the Over/Under
+  <li> <a href="ray_trace_tutorial.html#Ex5">Example 5: Cropping the Image</a>
+  <li> <a href="ray_trace_tutorial.html#Ex6">Example 6: Displaying
+Tags on a Slice</a>
+  <li> <a href="ray_trace_tutorial.html#Ex7">Example 7: Using Lighting</a>
+  <li> <a href="ray_trace_tutorial.html#Ex8">Example 8: Superimposing PET on MRI</a>
+  <li> <a href="ray_trace_tutorial.html#Ex9">Example 9: Superimposing PET on MRI with Transparency</a>
+  <li> <a href="ray_trace_tutorial.html#Ex10">Example 10: Displaying Surfaces</a>
+  <li> <a href="ray_trace_tutorial.html#Ex11">Example 11: Choosing
+View Orientation</a>
+  <li> <a href="ray_trace_tutorial.html#Ex12">Example 12: Colouring
+Surfaces with Volumes</a>
+  <li> <a href="ray_trace_tutorial.html#Ex13">Example 13: Defining Lights</a>
+  <li> <a href="ray_trace_tutorial.html#Ex14">Example 14: Cross
+sections of Surfaces Superimposed on a Slice</a>
+  <li> <a href="ray_trace_tutorial.html#Ex15">Example 15: Supersampling</a>
+</ul>
+
+<!--------------------------------------------------------------------->
+
+<h2><a name="Introduction">Introduction</a></h2>
+
+The MNI-ray_trace is a set of software used to render high-quality
+images for publication and animation, and represents an alternative to
+using MNI-Display and MNI-register to create neuroanatomical images.
+The reasons to use MNI-ray_trace over the other two programs include:
+
+<ul>
+  <li>  Reproducibility : using script files allows images to be
+                          easily regenerated or modified, and
+  <li>  Image Quality : the use of partial transparency, super-sampling,
+                        and other features create better images.
+</ul>
+
+What follows is a tutorial consisting of examples, starting with the
+simpler cases and progressing to more complicated examples.
+
+<!--------------------------------------------------------------------->
+
+<hr>
+<h2><a name="Running">How to Run MNI-ray_trace</a></h2>
+
+All the executables listed in this tutorial reside in the directory
+<kbd>~david/public_bin</kbd>.  The list of programs used include:
+
+<ul>
+  <li> <kbd>~david/public_bin/ray_trace</kbd> : the ray trace program
+  <li> <kbd>~david/public_bin/make_slice</kbd> : creates a slice object
+</ul>
+
+<!--------------------------------------------------------------------->
+
+<hr>
+<h2><a name="Data">Data for this Tutorial</a></h2>
+
+The following data are used for the examples in this tutorial.
+
+<ul>
+  <li>  a T1-weighted Minc volume : <kbd> /data/icbm/mri1/new_icbm/subjects/00100/final/mni_icbm_00100_t1_final.mnc </kbd>
+  <li>  a cortical surface : <kbd> /data/icbm/mri1/new_icbm/subjects/00100/surfaces/mni_icbm_00100_t1_cortex.obj.gz </kbd>
+  <li>  a set of tags : <kbd> tags.tag </kbd> which contains the following:
+    <ul>
+    <li><tt>
+          MNI Tag Point File  <br>
+          Volumes = 1;  <br>
+  <br>
+          Points =  <br>
+           -30 -52 64 "Marker"  <br>
+           -30  15 58 "Marker"  <br>
+           -30 -14 28 "Marker";  <br>
+    </tt></ul>
+</ul>
+
+<!--------------------------------------------------------------------->
+
+<hr>
+<h2><a name="Ex1">Example 1: Making a Slice Image</a></h2>
+
+First a rectangle is created using the <kbd>make_slice</kbd> program,
+then the ray tracer is invoked with the rectangle following the Minc
+file colour coding arguments on the command line.  Note that the
+<kbd>-nolight</kbd> argument must precede the <kbd>slice.obj</kbd>
+argument in order to have the desired effect of not using lighting
+equations to render the colours of the slice.  Instead of
+<b><kbd>-hot</kbd></b>, one can use 
+<b><kbd>-gray</kbd></b>,
+<b><kbd>-spectral</kbd></b>,
+<b><kbd>-red</kbd></b>,
+<b><kbd>-green</kbd></b>,
+<b><kbd>-blue</kbd></b>,
+<b><kbd>-colour</kbd></b>, or
+<b><kbd>-usercc</kbd></b>.
+
+<p>
+<img src="Images/ex1.gif">
+</p>
+
+<p>
+<kbd>~david/public_bin/make_slice /data/icbm/mri1/new_icbm/subjects/00100/final/mni_icbm_00100_t1_final.mnc slice.obj x w -30 2 2</kbd>
+</p>
+
+<p>
+<kbd>~david/public_bin/ray_trace -output ex1.rgb -nolight -hot 80000 500000 /data/icbm/mri1/new_icbm/subjects/00100/final/mni_icbm_00100_t1_final.mnc 0 1 slice.obj
+</kbd>
+</p>
+
+<!--------------------------------------------------------------------->
+
+<hr>
+<h2><a name="Ex2">Example 2: Setting the Image Size</a></h2>
+
+<p>
+Use the <b><kbd>-size x_size y_size</kbd></b> option.
+</p>
+
+<img src="Images/ex2.gif" align=left>
+
+<p>
+<kbd>~david/public_bin/make_slice /data/icbm/mri1/new_icbm/subjects/00100/final/mni_icbm_00100_t1_final.mnc slice.obj x w -30 2 2</kbd>
+</p>
+
+<p>
+<kbd>~david/public_bin/ray_trace -output ex1.rgb -nolight -hot 80000 500000 /data/icbm/mri1/new_icbm/subjects/00100/final/mni_icbm_00100_t1_final.mnc 0 1 slice.obj
+-size 200 200
+</kbd>
+</p>
+<br clear=left>
+
+<!--------------------------------------------------------------------->
+
+<hr>
+<h2><a name="Ex3">Example 3: Setting the Background Colour</a></h2>
+
+<p>
+Use the <b><kbd>-bg colour</kbd></b> option.
+</p>
+
+<img src="Images/ex3.gif" align=left>
+
+<p>
+<kbd>~david/public_bin/make_slice /data/icbm/mri1/new_icbm/subjects/00100/final/mni_icbm_00100_t1_final.mnc slice.obj x w -30 2 2</kbd>
+</p>
+
+<p>
+<kbd>~david/public_bin/ray_trace -output ex1.rgb -nolight -hot 80000 500000 /data/icbm/mri1/new_icbm/subjects/00100/final/mni_icbm_00100_t1_final.mnc 0 1 slice.obj
+-size 200 200 -bg white
+</kbd>
+</p>
+<br clear=left>
+
+<!--------------------------------------------------------------------->
+
+<hr>
+<h2><a name="Ex4">Example 4: Setting the Over/Under Colours</a></h2>
+
+<p>
+Use the <b><kbd>-over colour_name</kbd></b> and <b><kbd>-under
+colour_name</kbd></b> option.  These two argument only affect
+subsequent colour coding arguments on the command line, in this case, the
+<kbd>-hot ...</kbd> arguments.
+</p>
+
+<img src="Images/ex4.gif" align=left>
+
+<p>
+<kbd>~david/public_bin/make_slice /data/icbm/mri1/new_icbm/subjects/00100/final/mni_icbm_00100_t1_final.mnc slice.obj x w -30 2 2</kbd>
+</p>
+
+<p>
+<kbd>~david/public_bin/ray_trace -output ex1.rgb -nolight -under blue
+-over green -hot 80000 500000 /data/icbm/mri1/new_icbm/subjects/00100/final/mni_icbm_00100_t1_final.mnc 0 1 slice.obj
+-size 200 200 -bg white
+</kbd>
+</p>
+<br clear=left>
+
+<!--------------------------------------------------------------------->
+
+<hr>
+<h2><a name="Ex5">Example 5: Cropping the Image</a></h2>
+
+<p>
+Since the default view provides a border around the object, the
+<b><kbd>-crop</kbd></b> option is one way to remove the wasted space,
+by reducing the width of background to 1 pixel.
+Another way is to explicitly define the view yourself, described later
+in the tutorial.
+</p>
+
+<img src="Images/ex5.gif" align=left>
+
+<p>
+<kbd>~david/public_bin/make_slice /data/icbm/mri1/new_icbm/subjects/00100/final/mni_icbm_00100_t1_final.mnc slice.obj x w -30 2 2</kbd>
+</p>
+
+<p>
+<kbd>~david/public_bin/ray_trace -output ex1.rgb -nolight -under blue
+-over green -hot 80000 500000 /data/icbm/mri1/new_icbm/subjects/00100/final/mni_icbm_00100_t1_final.mnc 0 1 slice.obj
+-size 200 200 -bg white -crop
+</kbd>
+</p>
+<br clear=left>
+
+<!--------------------------------------------------------------------->
+
+<hr>
+<h2><a name="Ex6">Example 6: Displaying Tags on a Slice</a></h2>
+
+<p>
+A tag file contains points in 3 dimensional space and usually has the
+suffix <kbd>.tag</kbd>.  The ray_tracer displays them as spheres.
+Be careful to put the tag filename on the command line
+<em>before</em> the <kbd>-hot</kbd> option, in order for the tags not
+to be colour coded by the volume.  The colour and size of the tags (if
+the size is not in the <kbd>.tag</kbd> file) are specified by the
+<kbd>-marker_size size</kbd> and <kbd>-marker_colour colour</kbd>
+arguments.
+
+</p>
+
+<img src="Images/ex6.gif" align=left>
+
+<p>
+<kbd>~david/public_bin/make_slice /data/icbm/mri1/new_icbm/subjects/00100/final/mni_icbm_00100_t1_final.mnc slice.obj x w -30 2 2</kbd>
+</p>
+
+<p>
+<kbd>~david/public_bin/ray_trace -output ex1.rgb -nolight -marker_size
+2 -marker_colour green tags.tag -hot 80000 500000 /data/icbm/mri1/new_icbm/subjects/00100/final/mni_icbm_00100_t1_final.mnc 0 1 slice.obj
+-size 200 200 -bg white -crop
+</kbd>
+</p>
+<br clear=left>
+
+<!--------------------------------------------------------------------->
+
+<hr>
+<h2><a name="Ex7">Example 7: Using Lighting</a></h2>
+
+<p>
+The <kbd>-light</kbd> and <kbd>-nolight</kbd> turn on and off lighting
+effects for subsequent objects on the command line.  In this example,
+the tag points have been made larger, and use lighting, but the slice
+does not use lighting effects.
+</p>
+
+<img src="Images/ex7.gif" align=left>
+
+<p>
+<kbd>~david/public_bin/make_slice /data/icbm/mri1/new_icbm/subjects/00100/final/mni_icbm_00100_t1_final.mnc slice.obj x w -30 2 2</kbd>
+</p>
+
+<p>
+<kbd>~david/public_bin/ray_trace -output ex1.rgb -nolight -marker_size
+2 -marker_colour green tags.tag -hot 80000 500000 /data/icbm/mri1/new_icbm/subjects/00100/final/mni_icbm_00100_t1_final.mnc 0 1 slice.obj
+-size 200 200 -bg white -crop
+</kbd>
+</p>
+<br clear=left>
+
+<!--------------------------------------------------------------------->
+
+<hr>
+<h2><a name="Ex8">Example 8: Superimposing PET on MRI</a></h2>
+
+<p>
+This example shows all regions of PET activation above a certain value
+on top of an MR image.  This is accomplished by putting the <kbd>-gray</kbd>
+MR colour coding on the command line, followed by <kbd>-under
+transparent</kbd>, and finally the <kbd>-spectral</kbd> colouring of
+the PET volume.
+</p>
+
+<img src="Images/ex8.gif" align=left>
+
+<p>
+<kbd>~david/public_bin/make_slice /data/icbm/mri1/new_icbm/subjects/00100/final/mni_icbm_00100_t1_final.mnc slice.obj x w -30 2 2</kbd>
+</p>
+
+<p>
+<kbd>
+~david/public_bin/ray_trace -output ex8.rgb -nolight -gray 80000 450000
+/data/icbm/mri1/new_icbm/subjects/00100/final/mni_icbm_00100_t1_final.mnc
+0 1 -under transparent -spectral 40 60 /avgbrain/brain/images/mni_demo_cbf_normal_pet_tal.mnc.gz 0 1 slice.obj -size 200 200 -bg white -crop
+</kbd>
+</p>
+<br clear=left>
+
+<!--------------------------------------------------------------------->
+
+<hr>
+<h2><a name="Ex9">Example 9: Superimposing PET on MRI with
+Transparency</a></h2>
+
+<p>
+The last argument of the colouring coding argument indicates
+the opacity of the volume colours.  By changing the argument:
+<kbd>
+-spectral 40 60 /avgbrain/brain/images/mni_demo_cbf_normal_pet_tal.mnc.gz 0 1
+</kbd>
+to
+<kbd>
+-spectral 40 60 /avgbrain/brain/images/mni_demo_cbf_normal_pet_tal.mnc.gz 0 .4
+</kbd>,
+the PET image shows a little of the underlying MR image.
+
+<img src="Images/ex9.gif" align=left>
+
+<p>
+<kbd>~david/public_bin/make_slice /data/icbm/mri1/new_icbm/subjects/00100/final/mni_icbm_00100_t1_final.mnc slice.obj x w -30 2 2</kbd>
+</p>
+
+<p>
+<kbd>
+~david/public_bin/ray_trace -output ex8.rgb -nolight -gray 80000 450000
+/data/icbm/mri1/new_icbm/subjects/00100/final/mni_icbm_00100_t1_final.mnc
+0 1 -under transparent -spectral 40 60 /avgbrain/brain/images/mni_demo_cbf_normal_pet_tal.mnc.gz 0 .4 slice.obj -size 200 200 -bg white -crop
+</kbd>
+</p>
+<br clear=left>
+
+<!--------------------------------------------------------------------->
+
+<hr>
+<h2><a name="Ex10">Example 10: Displaying Surfaces</a></h2>
+
+<p>
+Surfaces are collections of triangles constituting a 3D surface,
+usually in a file with a suffix of <kbd>.obj</kbd>.  They are rendered
+simply by placing the filename on the command line.  The default view
+is a 3/4 view from the posterior top left
+
+<img src="Images/ex10.gif" align=left>
+
+<p>
+<kbd>
+david/public_bin/ray_trace -output ex11.rgb /data/icbm/mri1/new_icbm/subjects/00100/surfaces/mni_icbm_00100_t1_cortex.obj.gz -size 200 200 -crop
+</kbd>
+</p>
+<br clear=left>
+
+<!--------------------------------------------------------------------->
+
+<hr>
+<h2><a name="Ex11">Example 11: Choosing View Orientation</a></h2>
+
+<p>
+Besides specifying a view orientation numerically (described later),
+there are 6 canonical views which may be chosen: 
+<b><kbd>-top</kbd></b>,
+<b><kbd>-bottom</kbd></b>,
+<b><kbd>-left</kbd></b>,
+<b><kbd>-right</kbd></b>,
+<b><kbd>-back</kbd></b>, and
+<b><kbd>-front</kbd></b>.
+</p>
+
+<img src="Images/ex11.gif" align=left>
+
+<p>
+<kbd>
+david/public_bin/ray_trace -output ex11.rgb /data/icbm/mri1/new_icbm/subjects/00100/surfaces/mni_icbm_00100_t1_cortex.obj.gz -size 200 200 -crop -left
+</kbd>
+</p>
+<br clear=left>
+
+<!--------------------------------------------------------------------->
+
+<hr>
+<h2><a name="Ex12">Example 12: Colouring Surfaces with Volumes</a></h2>
+
+<p>
+Pet activations and other volume information may be coloured onto a
+surface in the same way as coloured slices were created in earlier
+examples.
+</p>
+
+<img src="Images/ex12.gif" align=left>
+
+<p>
+<kbd>
+~david/public_bin/ray_trace -output ex12.rgb -under white -spectral 40 60
+/avgbrain/brain/images/mni_demo_cbf_normal_pet_tal.mnc.gz 0 1
+/data/icbm/mri1/new_icbm/subjects/00100/surfaces/mni_icbm_00100_t1_cortex.obj.gz -size 200 200 -crop -left
+</kbd>
+</p>
+<br clear=left>
+
+<!--------------------------------------------------------------------->
+
+<hr>
+<h2><a name="Ex13">Example 13: Defining Lights</a></h2>
+
+<p>
+Lights may be defined by the use of <b><kbd>-directional x y z r g b</kbd></b>
+where <kbd>x y z</kbd> defines the direction the light is shining, and
+<kbd>r g b</kbd> define the three colour components of the light, with
+maximum values of 1.  The usual is 1 1 1, which corresponds to white light.
+
+</p>
+<img src="Images/ex13.gif" align=left>
+<p>
+<kbd>
+~david/public_bin/ray_trace -output ex12.rgb -under white -spectral 40 60
+/avgbrain/brain/images/mni_demo_cbf_normal_pet_tal.mnc.gz 0 1
+/data/icbm/mri1/new_icbm/subjects/00100/surfaces/mni_icbm_00100_t1_cortex.obj.gz -size 200 200 -crop -left -directional 1 -1 -1 1 1 1 -directional -1 -1 -1 1 1 1
+</kbd>
+</p>
+<br clear=left>
+
+<!--------------------------------------------------------------------->
+
+<hr>
+<h2><a name="Ex14">Example 14: Cross Sections of Surfaces Superimposed
+on a Slice</a></h2>
+
+<p>
+Cross sections of surfaces are created by the 
+<b><kbd>plane_polygon_intersection</kbd></b> program to create lines,
+the <b><kbd>set_object_colour</kbd></b> program to set the colour,
+which are then rendered on top of slices.
+
+</p>
+<img src="Images/ex14.gif" align=left>
+<p>
+<kbd>
+~david/public_bin/make_slice /data/icbm/mri1/new_icbm/subjects/00100/final/mni_icbm_00100_t1_final.mnc slice.obj x w -30 2 2
+</kbd>
+</p>
+<p>
+<kbd>
+~david/public_bin/plane_polygon_intersect /data/icbm/mri1/new_icbm/subjects/00100/surfaces/mni_icbm_00100_t1_cortex.obj.gz lines.obj x -30
+</kbd>
+</p>
+<p>
+<kbd>
+~david/public_bin/set_object_colour lines.obj lines.obj green
+</kbd>
+</p>
+<p>
+<kbd>
+~david/public_bin/ray_trace -output ex14.rgb -nolight -line_width 2 lines.obj -hot 80000 450000 /data/icbm/mri1/new_icbm/subjects/00100/final/mni_icbm_00100_t1_final.mnc 0 1 slice.obj -size 200 200 -bg white -crop -right
+</kbd>
+</p>
+<br clear=left>
+
+<!--------------------------------------------------------------------->
+
+<hr>
+<h2><a name="Ex15">Example 15: Supersampling</a></h2>
+
+<p>
+Supersampling is a method of computing the colour several times per pixel
+and assigning the average value.  Essentially it smooths the jagged
+edges that often appear in images.  An argument of <b><kbd>-sup 3</kbd></b>
+requires 9 times the computation time as the default (which is -sup
+1), but the results can sometimes be subtly more pleasing.
+</p>
+
+<img src="Images/ex15.gif" align=left>
+<p>
+<kbd>
+~david/public_bin/make_slice /data/icbm/mri1/new_icbm/subjects/00100/final/mni_icbm_00100_t1_final.mnc slice.obj x w -30 2 2
+</kbd>
+</p>
+<p>
+<kbd>
+~david/public_bin/plane_polygon_intersect /data/icbm/mri1/new_icbm/subjects/00100/surfaces/mni_icbm_00100_t1_cortex.obj.gz lines.obj x -30
+</kbd>
+</p>
+<p>
+<kbd>
+~david/public_bin/set_object_colour lines.obj lines.obj green
+</kbd>
+</p>
+<p>
+<kbd>
+~david/public_bin/ray_trace -output ex14.rgb -nolight -line_width 2 lines.obj -hot 80000 450000 /data/icbm/mri1/new_icbm/subjects/00100/final/mni_icbm_00100_t1_final.mnc 0 1 slice.obj -size 200 200 -bg white -crop -right -sup 3
+</kbd>
+</p>
+<br clear=left>
+
+<!--------------------------------------------------------------------->
+
+</body>
+</html>

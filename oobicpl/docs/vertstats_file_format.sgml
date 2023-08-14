@@ -1,0 +1,107 @@
+<!doctype linuxdoc system>
+
+<article>
+<!-- LyX 1.3 created this file. For more info see http://www.lyx.org/ -->
+<title>
+The vertstats File Format
+
+</title>
+<author>
+Jason Lerch
+
+</author>
+<date>
+Version 1: April 2003
+
+</date>
+<sect>
+Introduction
+<p>
+The <em>vertstats</em> file format is designed to hold auxilliary information
+ about each vertex in a surface model. This can be some metric about
+ each vertex, such as cortical thickness or curvature, or it can be
+ resulting information from a statistical model. The file format is
+ agnostic about the type of values it holds, it is, however, currently
+ limited to scalar values only at each vertex.
+
+</p>
+<p>
+A vertstats<em> </em>file is a plain text file. It is broken down into
+ three parts. The first is the header, made up of a vaguely XML like
+ hierarchical data structure, and open to any kind of information
+ that can be held as a string. The data section is broken down into
+ a short data header, which contains a name for every data column,
+ followed by the columns of scalar data.
+
+</p>
+<sect>
+The Header
+<p>
+The header looks something like this:
+
+</p>
+
+<p>
+<verb>
+&lt;header&gt;
+&lt;formula&gt;
+y &tilde; V2 + V3
+&lt;/formula&gt;
+&lt;patient&gt;
+&lt;name&gt;
+John Doe
+&lt;/name&gt;
+&lt;birthdate&gt;
+11/01/77
+&lt;/birthdate&gt;
+&lt;/patient&gt;
+&lt;/header&gt;
+
+</verb>
+</p><p>
+The rules are the following:
+
+</p>
+
+<p>
+<itemize>
+ <item>
+Beginning and end tags are required for each element.
+ <item>
+Tags take the form of &lt;NAME&gt; and &lt;/NAME&gt;
+ <item>
+Tags have to be on a line of their own.
+ <item>
+The header must begin with &lt;header&gt; and end with &lt;/header&gt;.
+ <item>
+Any text inside of a header entry is legal outside of &lt;&lsqb;a-z&rsqb;+&gt;
+ or &lt;/&lsqb;a-z&rsqb;+&gt;.
+ <item>
+If a header entry contains its own body as well as subheaders,
+ the body must come before any subheader.
+
+</itemize>
+</p><sect>
+The Data
+<p>
+The data part of the <em>vertstats </em>file consists of two parts: the
+ first short part is a single line with space separated names for
+ each of the data columns, i.e.:
+
+</p>
+
+<p>
+<verb>
+adj.r.squared fstatistic intercept slope.1 slope.2 slope.3 tstatistic.1 tstatistic.2 tstatistic.3
+
+</verb>
+</p><p>
+This is followed by the data itself, also space separated for
+ each column, with one line per vertex. 
+
+</p>
+
+
+
+
+</article>
