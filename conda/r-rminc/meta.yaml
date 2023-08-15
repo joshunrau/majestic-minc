@@ -67,7 +67,6 @@ requirements:
     - r-rlang
     - r-bigstatsr
     - r-plotrix
-    - r-alertest
 about:
   home: https://github.com/Mouse-Imaging-Centre/RMINC
   summary: 'MINC Interface to R'
