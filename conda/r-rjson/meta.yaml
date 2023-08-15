@@ -1,0 +1,29 @@
+package:
+  name: r-rjson
+  version: "0.2.21"
+source:
+  url: "{{ cran_mirror }}/src/contrib/Archive/rjson/rjson_0.2.21.tar.gz"
+  sha256: 982b56d35ccc0c7db0b20c1d3eab5f5f47c620309646fdc278ff1cc3433ea2e2
+build:
+  number: 0
+  rpaths:
+    - lib/R/lib/
+    - lib/
+requirements:
+  build:
+    - "{{ compiler('c') }}"
+    - "{{ compiler('cxx') }}"
+    - make
+  host:
+    - r-base
+  run:
+    - r-base
+test:
+  commands:
+    - $R -e "library('rjson')"
+about:
+  home: https://github.com/alexcb/rjson
+  license: GPL-2
+  summary: Converts R object into JSON objects and vice-versa.
+  license_family: GPL2
+  license_file: '{{ environ["PREFIX"] }}/lib/R/share/licenses/GPL-2'
