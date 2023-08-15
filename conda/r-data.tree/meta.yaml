@@ -1,0 +1,32 @@
+package:
+  name: r-data.tree
+  version: "1.0.0"
+source:
+  url: "{{ cran_mirror }}/src/contrib/data.tree_1.0.0.tar.gz"
+  sha256: 40674c90a5bd00f5185db9adbd221c6f1114043e69095249f5fa8b3044af3f5e
+build:
+  number: 0
+  rpaths:
+    - lib/R/lib/
+    - lib/
+requirements:
+  host:
+    - r-base
+    - r-r6
+    - r-stringi
+  run:
+    - r-base
+    - r-r6
+    - r-stringi
+test:
+  commands:
+    - $R -e "library('data.tree')"
+about:
+  home: http://github.com/gluc/data.tree
+  license: GPL-2
+  summary: Create tree structures from hierarchical data, and traverse the tree in various orders.
+    Aggregate, cumulate, print, plot, convert to and from data.frame and more. Useful
+    for decision trees, machine learning, finance, conversion from and to JSON, and
+    many other applications.
+  license_family: GPL2
+  license_file: '{{ environ["PREFIX"] }}/lib/R/share/licenses/GPL-2'
