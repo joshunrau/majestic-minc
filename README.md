@@ -7,16 +7,3 @@ This repository is a fork of [`minc-toolkit`](https://github.com/BIC-MNI/minc-to
 ```shell
 conda install -c minc-forge -c joshunrau r-rminc
 ```
-
-## Building Conda Package
-
-### Create Environment
-```shell
-conda create -c minc-forge --name minc conda-build anaconda-client minc-toolkit-v2 r-base=4.1.3
-```
-
-### Compile Packages
-
-```shell
-conda-build -c minc-forge --R 4.1.3 conda/r-rminc
-```
